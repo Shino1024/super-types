@@ -3,19 +3,16 @@ class SuperInteger {
 	private:
 		struct Digit {
 			unsigned short x: 4;
-		} integer[4096];
+		};
+		Digit* integers;
 		int digits;
 		static int c;
-		int iterator = 4096;
+		int iterator = 0;
 		bool neg;
 	public:
-		SuperInteger(char[]);
-		SuperInteger(int);
+		friend SuperInteger(char[]);
+		friend SuperInteger(long int);
 		void introduce(SuperInteger&);
-		int& iter() const {return iterator;}
+		bool& isneg() {return neg;}
+		friend std::ostream& operator<<(std::ostream&, SuperInteger const&);
 };
-SuperInteger operator+(SuperInteger const&, SuperInteger const&);
-SuperInteger operator*(SuperInteger const&, SuperInteger const&);
-SuperInteger operator-(SuperInteger const&, SuperInteger const&);
-SuperInteger operator/(SuperInteger const&, SuperInteger const&);
-SuperInteger operator%(SuperInteger const&, SuperInteger const&);

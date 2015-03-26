@@ -3,17 +3,24 @@
 #include "include/SuperInteger.h"
 
 SuperInteger::SuperInteger(char si[]) {
-	++c;
-	if (static_cast<int>(sizeof(si)) > 4095)
-		std::cout << "Too big to fit!" << std::endl;
+	if (si[0] == '-') {
+		digits = static_cast<int>(sizeof(si)) - 2;
+		neg = true;
+	}
+	else
+		digits = static_cast<int>(sizeof(si)) - 1;
+	if (digits > 4095)
+		std::cout << "Too big to input!" << std::endl;
 	else {
-		for (int i = 4096 - static_cast<int>(sizeof(si)) - 1, int j = 0; i < 4096; ++i, ++j) {
-			integer[i].x = static_cast<unsigned short>(si[j] - 48);
+		++c;
+		integers = new Digit[digits];
+		for (; iterator < digits; iterator++) {
+			integer[iterator]->x = static_cast<unsigned short>(si[iterator] - 48);
 		}
-		digits = static_cast<int>(sizeof(si) - 1);	
 	}
 }
-SuperInteger::SuperInteger(long double si) {
+SuperInteger::SuperInteger(long int si) {
+	++c;
 	if (si < 0) {
 		neg = true;
 		si = -si;
@@ -21,15 +28,19 @@ SuperInteger::SuperInteger(long double si) {
 	else
 		neg = false;
 	do {
-		++digits;
-		integers[--iterator].x = static_cast<unsigned short>((si / 10 - static_cast<long int>(si / 10)) * 10);
+		integers[iterator++]->x = static_cast<unsigned short>((si / 10 - static_cast<long int>(si / 10)) * 10);
 		si = static_cast<long int>(si / 10);
 	} while (si != 0);
-	if (neg)
-		integers[--iterator].x = 10;
 }
 void SuperInteger::introduce(SuperInteger& si) {
-	for (int i = 
+	if (!(si.isneg()))
+		std::cout << '-';
+	for (int i = 0; i < digits; i++)
+		std::cout << si.(integers[i]->x);
+}
+SuperInteger operator-(SuperInteger const& a) {
+	a.isneg() = !(a.isneg());
+	return a;
 }
 SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
@@ -45,4 +56,11 @@ SuperInteger operator/(SuperInteger const& a, SuperInteger const& b) {
 }
 SuperInteger operator%(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
+}
+std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
+	if (!(si.isneg()))
+		out << '-';
+	for (int i = 0; i < digits; i++)
+		out << si.(integers[i]->x);
+	return out;
 }
