@@ -12,7 +12,10 @@ class SuperInteger {
 	public:
 		friend SuperInteger(char[]);
 		friend SuperInteger(long int);
-		void introduce(SuperInteger&);
+		void introduce(SuperInteger&) const;
 		bool& isneg() {return neg;}
+		int dig() const {return digits;}
+		int dig(int x) const {return integers[x - 1]->x;}
+		bool check(char[]);
 		friend std::ostream& operator<<(std::ostream&, SuperInteger const&);
 };

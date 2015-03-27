@@ -2,7 +2,26 @@
 #include <cstdlib>
 #include "include/SuperInteger.h"
 
+bool SuperInteger::check(char si[]) {
+	if (si[0] == '\0') {
+		std::cout << "Empty string." << std::endl;
+		return false;
+	}
+	else if (((si[0] <= '0' || si[0] > '9') && si[0] != '-') || (si[0] == '-' && si[1] <= '0' && si[1] > '9') || si[0] == '0') {
+		std::cout << "Inappropriate SuperInteger, creation terminated." << std::endl;
+		return false;
+	}
+	else {
+		for (int i = 1; i < static_cast<int>(sizeof(si)) - 1; i++)
+			if (si[i] <= '0' || si[i] > '9') {
+				std::cout << "Wrong character found, creation of the new SuperInteger terminated." << std::endl;
+				return false;
+			}
+	}
+}
 SuperInteger::SuperInteger(char si[]) {
+	if (!(check(si))
+		throw "Inappropriate number!";
 	if (si[0] == '-') {
 		digits = static_cast<int>(sizeof(si)) - 2;
 		neg = true;
@@ -33,7 +52,7 @@ SuperInteger::SuperInteger(long int si) {
 	} while (si != 0);
 }
 void SuperInteger::introduce(SuperInteger& si) {
-	if (!(si.isneg()))
+	if (si.isneg())
 		std::cout << '-';
 	for (int i = 0; i < digits; i++)
 		std::cout << si.(integers[i]->x);
@@ -57,8 +76,26 @@ SuperInteger operator/(SuperInteger const& a, SuperInteger const& b) {
 SuperInteger operator%(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
 }
+bool operator<(SuperInteger const& a, SuperInteger const& b) {
+	
+}
+bool operator>(SuperInteger const& a, SuperInteger const& b) {
+	
+}
+bool operator<=(SuperInteger const& a, SuperInteger const& b) {
+	
+}
+bool operator>=(SuperInteger const& a, SuperInteger const& b) {
+	
+}
+bool operator==(SuperInteger const& a, SuperInteger const& b) {
+	
+}
+bool operator!=(SuperInteger const& a, SuperInteger const& b) {
+	
+}
 std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
-	if (!(si.isneg()))
+	if (si.isneg())
 		out << '-';
 	for (int i = 0; i < digits; i++)
 		out << si.(integers[i]->x);
