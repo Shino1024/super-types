@@ -21,7 +21,7 @@ bool SuperInteger::check(char si[]) {
 }
 SuperInteger::SuperInteger(char si[]) {
 	if (!(check(si))
-		throw "Inappropriate number!";
+		throw std::cerr << "Inappropriate number!" << std::endl;
 	if (si[0] == '-') {
 		digits = static_cast<int>(sizeof(si)) - 2;
 		neg = true;
@@ -33,7 +33,7 @@ SuperInteger::SuperInteger(char si[]) {
 	else {
 		++c;
 		integers = new Digit[digits];
-		for (; iterator < digits; iterator++) {
+		for (int iterator = 0; iterator < digits; iterator++) {
 			integer[iterator]->x = static_cast<unsigned short>(si[iterator] - 48);
 		}
 	}
@@ -46,9 +46,16 @@ SuperInteger::SuperInteger(long int si) {
 	}
 	else
 		neg = false;
+	int iterator = 0, length = 0;
+	long int copy = si;
+	do {
+		copy /= 10;
+		++length;
+	} while (copy != 0);
+	integers = new Digit[length];
 	do {
 		integers[iterator++]->x = static_cast<unsigned short>((si / 10 - static_cast<long int>(si / 10)) * 10);
-		si = static_cast<long int>(si / 10);
+		si /= 10;
 	} while (si != 0);
 }
 void SuperInteger::introduce(SuperInteger& si) {
@@ -62,7 +69,13 @@ SuperInteger operator-(SuperInteger const& a) {
 	return a;
 }
 SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
-	SuperInteger ret;
+	if (a > b && a.isneg() && b.isneg()) {
+		for (int n = b.dig() - 1; !(n - 1); --n) {
+		}
+	}
+	else {
+		
+	}
 }
 SuperInteger operator-(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
@@ -77,22 +90,67 @@ SuperInteger operator%(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
 }
 bool operator<(SuperInteger const& a, SuperInteger const& b) {
-	
+	if (a.isneg() && !(b.isneg())
+		return true;
+	else if (!(a.isneg()) && b.isneg())
+		return false;
+	else if (a.dig() > b.dig() && a.isneg() && b.isneg())
+		return true;
+	else if (a.dig() > b.dig() && !(a.isneg()) && !(b.isneg()))
+		return false;
+	else if (a.dig() < b.dig() && a.isneg() && b.isneg())
+		return false;
+	else if (a.dig() < b.dig() && !(a.isneg()) && !(b.isneg()))
+		return true;
+	else if (a == b)
+		return false;
+	else {
+		for (int iterator = 0; iterator < a.dig(); ++iterator)
+			if (a[iterator] < b[iterator])
+				return true;
+			else if (a[iterator] > b[iterator])
+				return false;
+			else
+				continue;
+	}
 }
 bool operator>(SuperInteger const& a, SuperInteger const& b) {
-	
+	if (!(a < b) && a != b)
+		return true;
+	else
+		return false;
 }
 bool operator<=(SuperInteger const& a, SuperInteger const& b) {
-	
+	if (a == b || a < b)
+		return true;
+	else
+		return false;
 }
 bool operator>=(SuperInteger const& a, SuperInteger const& b) {
-	
+	if (a == b || a > b)
+		return true;
+	else
+		return false;
 }
 bool operator==(SuperInteger const& a, SuperInteger const& b) {
-	
+	if (a < b)
+		return false;
+	else {
+		if (a.dig() != b.dig() || a.isneg() != b.isneg())
+			return false;
+		else {
+			for (int iterator = 0; iterator < a.dig(); ++iterator)
+				if (a[iterator] != b[iterator])
+					return false;
+		}
+		return true;
+	}
 }
 bool operator!=(SuperInteger const& a, SuperInteger const& b) {
-	
+	if (a == b)
+		return false;
+	else
+		return true;
 }
 std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
 	if (si.isneg())
