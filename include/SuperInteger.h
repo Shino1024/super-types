@@ -4,17 +4,18 @@ class SuperInteger {
 		struct Digit {
 			unsigned short x: 4;
 		};
-		Digit* integers;
+		std::vector<Digit> integers;
 		int digits;
 		static int c;
 		bool neg;
 	public:
-		int& operator[](int a) {return integers[a]->x;}
+		void resize(int a);
+		int& operator[](int a) {return integers.at(a - 1).x;}
 		friend SuperInteger(char[]);
 		friend SuperInteger(long int);
 		void introduce(SuperInteger&) const;
 		bool& isneg() {return neg;}
-		int dig() const {return digits;}
+		int& dig() const {return digits;}
 		bool check(char[]);
 		friend std::ostream& operator<<(std::ostream&, SuperInteger const&);
 };
