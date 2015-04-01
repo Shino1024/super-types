@@ -78,11 +78,22 @@ SuperInteger operator-(SuperInteger const& a) {
 	return a;
 }
 SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
-	char bg = 0;
 	if (!(a.isneg()) && !(b.isneg()))
-		for (int n = b.dig() - 1; !(n - 1); --n) {
-			
+		for (int n = 1; n < b.dig(); ++n) {
+			a[n] += b[n];
+			if (a[n] > 9) {
+				++(a[n + 1]);
+				a[n] -= 10;
+			}
 		}
+		if (a[n] > 9 && n == a.dig()) {
+			a[n] -= 10;
+			Digit one;
+			one.x = 1;
+			a.insert(one);
+		}
+		else if (a[n] > 9 && n != a.dig())
+			++(a[n + 1]);
 	else {
 		
 	}
@@ -98,6 +109,21 @@ SuperInteger operator/(SuperInteger const& a, SuperInteger const& b) {
 }
 SuperInteger operator%(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
+}
+SuperInteger operator+=(SuperInteger const& a, SuperInteger const& b) {
+	return a = a + b;
+}
+SuperInteger operator-=(SuperInteger const& a, SuperInteger const& b) {
+	return a = a - b;
+}
+SuperInteger operator*=(SuperInteger const& a, SuperInteger const& b) {
+	return a = a * b;
+}
+SuperInteger operator/=(SuperInteger const& a, SuperInteger const& b) {
+	return a = a / b;
+}
+SuperInteger operator%=(SuperInteger const& a, SuperInteger const& b) {
+	return a = a % b;
 }
 SuperInteger operator<<(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;

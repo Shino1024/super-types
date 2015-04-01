@@ -9,7 +9,6 @@ class SuperInteger {
 		static int c;
 		bool neg;
 	public:
-		void resize(int a);
 		int& operator[](int a) {return integers.at(a - 1).x;}
 		friend SuperInteger(char[]);
 		friend SuperInteger(long int);
