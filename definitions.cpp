@@ -3,6 +3,8 @@
 #include <vector>
 #include "include/SuperInteger.h"
 
+const int max_size = 4096;
+
 template <typename X>
 void swap(X a, X b) {
 	X c = a;
@@ -35,7 +37,7 @@ SuperInteger::SuperInteger(char si[]) {
 	}
 	else
 		digits = static_cast<int>(sizeof(si)) - 1;
-	if (digits > 4095)
+	if (digits > max_size)
 		std::cout << "Too big to input!" << std::endl;
 	else {
 		++c;
@@ -70,33 +72,60 @@ SuperInteger::SuperInteger(long int si) {
 void SuperInteger::introduce(SuperInteger& si) {
 	if (si.isneg())
 		std::cout << '-';
-	for (int i = 0; i < digits; i++)
+	for (int i = 1; i <= digits; i++)
 		std::cout << si[i];
 }
 SuperInteger operator-(SuperInteger const& a) {
+	SuperInteger ret;
 	a.isneg() = !(a.isneg());
 	return a;
 }
 SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
-	if (!(a.isneg()) && !(b.isneg()))
-		for (int n = 1; n < b.dig(); ++n) {
-			a[n] += b[n];
-			if (a[n] > 9) {
-				++(a[n + 1]);
-				a[n] -= 10;
-			}
-		}
-		if (a[n] > 9 && n == a.dig()) {
-			a[n] -= 10;
-			Digit one;
-			one.x = 1;
-			a.insert(one);
-		}
-		else if (a[n] > 9 && n != a.dig())
-			++(a[n + 1]);
-	else {
-		
+	if (a.dig() + 1 > max_size) {
+		std::cout << "Further addition impossible, the upper bound is reached." << std::endl;
+		return a;
 	}
+	SuperInteger ret;
+	Digit helper;
+	if (!(a.isneg()) && !(b.isneg()) && a > b)
+		if (!(a.isneg()) && !(b.isneg())) {
+			for (int n = 1; n <= b.dig(); ++n) {
+				helper.x = a[n] + b[n];
+				ret.push_back(helper);
+				if (ret[n] > 9) {
+					helper.x = 1;
+					ret.push_back(helper);
+					ret[n] -= 10;
+				}
+			}
+			ret.dig() = a.dig();
+			if (ret[ret.dig()] > 9) {
+				ret[n] -= 10;
+				helper.x = 1;
+				ret.push_back(helper);
+				++(ret.dig());
+			}
+			return ret;
+		}
+		else if (a.isneg() && b.isneg()) {
+			for (int n = 1; n <= b.dig(); ++n) {
+				helper.x = a[n] + b[n];
+				ret.push_back(helper);
+				if (ret[n] > 9) {
+					helper.x = 1;
+					ret.push_back(helper);
+					ret[n] -= 10;
+				}
+			}
+			ret.dig() = a.dig();
+			if (ret[ret.dig()] > 9) {
+				ret[n] -= 10;
+				helper.x = 1;
+				ret.push_back(helper);
+				++(ret.dig());
+			}
+			return ret;
+		}
 }
 SuperInteger operator-(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
@@ -111,19 +140,19 @@ SuperInteger operator%(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
 }
 SuperInteger operator+=(SuperInteger const& a, SuperInteger const& b) {
-	return a = a + b;
+	return a + b;
 }
 SuperInteger operator-=(SuperInteger const& a, SuperInteger const& b) {
-	return a = a - b;
+	return a - b;
 }
 SuperInteger operator*=(SuperInteger const& a, SuperInteger const& b) {
-	return a = a * b;
+	return a * b;
 }
 SuperInteger operator/=(SuperInteger const& a, SuperInteger const& b) {
-	return a = a / b;
+	return a / b;
 }
 SuperInteger operator%=(SuperInteger const& a, SuperInteger const& b) {
-	return a = a % b;
+	return a % b;
 }
 SuperInteger operator<<(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
@@ -193,7 +222,7 @@ bool operator==(SuperInteger const& a, SuperInteger const& b) {
 	if (a.dig() != b.dig() || a.isneg() != b.isneg())
 		return false;
 	else
-		for (int iter = 0; iter < a.dig() ++iter)
+		for (int iter = 1; iter <= a.dig() ++iter)
 			if (a[iter] != b[iter])
 				return false;
 	return true;
@@ -207,7 +236,7 @@ bool operator!=(SuperInteger const& a, SuperInteger const& b) {
 std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
 	if (si.isneg())
 		out << '-';
-	for (int i = 0; i < digits; i++)
+	for (int i = 1; i <= digits; i++)
 		out << si[i];
 	return out;
 }

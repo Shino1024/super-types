@@ -5,13 +5,13 @@ class SuperInteger {
 			unsigned short x: 4;
 		};
 		std::vector<Digit> integers;
-		int digits;
+		int digits = 0;
 		static int c;
 		bool neg;
 	public:
 		int& operator[](int a) {return integers.at(a - 1).x;}
-		friend SuperInteger(char[]);
-		friend SuperInteger(long int);
+		SuperInteger(char[]);
+		SuperInteger(long int);
 		void introduce(SuperInteger&) const;
 		bool& isneg() {return neg;}
 		int& dig() const {return digits;}
