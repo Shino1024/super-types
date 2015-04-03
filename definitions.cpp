@@ -28,6 +28,12 @@ bool SuperInteger::check(char si[]) {
 			}
 	}
 }
+SuperInteger::SuperInteger() {
+	++c;
+	Digit helper;
+	helper.x = 0;
+	push(helper);
+}
 SuperInteger::SuperInteger(char si[]) {
 	if (!(check(si))
 		throw std::cerr << "Inappropriate number!" << std::endl;
@@ -44,7 +50,7 @@ SuperInteger::SuperInteger(char si[]) {
 		Digit next;
 		for (short iter = 0; si[iter] != '\0'; ++iter) {
 			next.x = static_cast<unsigned short>(si[iter] - 48);
-			integers.insert(next);
+			ins(next);
 		}
 	}
 }
@@ -66,7 +72,7 @@ SuperInteger::SuperInteger(long int si) {
 	do {
 		next.x = static_cast<unsigned short>((si / 10 - static_cast<long int>(si / 10)) * 10);
 		si /= 10;
-		integers.push_back(next);
+		push(next);
 	} while (si != 0);
 }
 void SuperInteger::introduce(SuperInteger& si) {
@@ -77,51 +83,55 @@ void SuperInteger::introduce(SuperInteger& si) {
 }
 SuperInteger operator-(SuperInteger const& a) {
 	SuperInteger ret;
-	a.isneg() = !(a.isneg());
-	return a;
+	ret = a;
+	ret.isneg() = !(a.isneg());
+	return ret;
 }
 SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
-	if (a.dig() + 1 > max_size) {
+	if (a.dig() + 1 > max_size || b.dig() + 1 > max_size) {
 		std::cout << "Further addition impossible, the upper bound is reached." << std::endl;
 		return a;
 	}
 	SuperInteger ret;
 	Digit helper;
-	if (!(a.isneg()) && !(b.isneg()) && a > b)
-		if (!(a.isneg()) && !(b.isneg())) {
-			for (int n = 1; n <= b.dig(); ++n) {
-				helper.x = a[n] + b[n];
-				ret.push_back(helper);
+	short add = 0;
+	if (!(a.isneg()) && !(b.isneg()))
+		if (a >= b) {
+			for (short n = 1; n <= b.dig(); ++n) {
+				helper.x = a[n] + b[n] + add;
+				ret.push(helper);
+				add = 0;
 				if (ret[n] > 9) {
-					helper.x = 1;
-					ret.push_back(helper);
+					add = 1;
 					ret[n] -= 10;
 				}
 			}
 			ret.dig() = a.dig();
-			if (ret[ret.dig()] > 9) {
-				ret[n] -= 10;
+			if (a[a.dig()] + add > 9) {
+				helper.x = 1 + a[a.dig()] - 10;
+				ret.push(helper);
 				helper.x = 1;
-				ret.push_back(helper);
+				ret.push(helper);
 				++(ret.dig());
 			}
 			return ret;
 		}
-		else if (a.isneg() && b.isneg()) {
-			for (int n = 1; n <= b.dig(); ++n) {
-				helper.x = a[n] + b[n];
-				ret.push_back(helper);
+		else {
+			for (short n = 1; n <= a.dig(); ++n) {
+				helper.x = a[n] + b[n] + add;
+				ret.push(helper);
+				add = 0;
 				if (ret[n] > 9) {
-					helper.x = 1;
-					ret.push_back(helper);
+					add = 1;
 					ret[n] -= 10;
 				}
 			}
-			ret.dig() = a.dig();
-			if (ret[ret.dig()] > 9) {
-				ret[n] -= 10;
+			ret.dig() = b.dig();
+			if (b[b.dig()] + add > 9) {
+				helper.x = 1 + b[b.dig()] - 10;
+				ret.push(helper);
 				helper.x = 1;
-				ret.push_back(helper);
+				ret.push(helper);
 				++(ret.dig());
 			}
 			return ret;
@@ -155,10 +165,28 @@ SuperInteger operator%=(SuperInteger const& a, SuperInteger const& b) {
 	return a % b;
 }
 SuperInteger operator<<(SuperInteger const& a, SuperInteger const& b) {
-	SuperInteger ret;
+	if (a.dig() + b > max_size) {
+		std::cout << "Can't go past the bound." << std::endl;
+		return a;
+	}
+	else {
+		SuperInteger ret;
+		ret = a;
+		Digit helper;
+		helper.x = 0;
+		for (; b != 0; --b)
+			ret.push(helper);
+	}
 }
 SuperInteger operator>>(SuperInteger const& a, SuperInteger const& b) {
-	SuperInteger ret;
+	if (a.dig() - b <= 0) {
+		std::cout << "There aren't as many digits in the left SuperInteger." << std::endl;
+		return a;
+	}
+	else {
+		SuperInteger ret;
+		
+	}
 }
 bool operator<(SuperInteger const& a, SuperInteger const& b) {
 	if (a.isneg() && !(b.isneg())

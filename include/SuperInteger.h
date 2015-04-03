@@ -4,11 +4,15 @@ class SuperInteger {
 		struct Digit {
 			unsigned short x: 4;
 		};
-		std::vector<Digit> integers;
-		int digits = 0;
+		std::deque<Digit> integers;
+		int digits = 1;
 		static int c;
 		bool neg;
 	public:
+		void ins(Digit a) const {integers.push_front(a);}
+		void push(Digit a) const {integers.push_back(a);}
+		void pop() const {integers.pop_front();}
+		void drop() const {integers.pop_back();}
 		int& operator[](int a) {return integers.at(a - 1).x;}
 		SuperInteger(char[]);
 		SuperInteger(long int);
