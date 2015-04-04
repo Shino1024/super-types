@@ -62,18 +62,35 @@ SuperInteger::SuperInteger(long int si) {
 	}
 	else
 		neg = false;
-	int iter = 0, length = 0;
 	long int copy = si;
-	do {
-		copy /= 10;
-		++length;
-	} while (copy != 0);
 	Digit next;
 	do {
 		next.x = static_cast<unsigned short>((si / 10 - static_cast<long int>(si / 10)) * 10);
-		si /= 10;
+		copy /= 10;
 		push(next);
+		++digits;
 	} while (si != 0);
+}
+SuperInteger::SuperInteger(long double sid) {
+	long int si = sid;
+	++c;
+	if (si < 0) {
+		neg = true;
+		si = -si;
+	}
+	else
+		neg = false;
+	long int copy = si;
+	Digit next;
+	do {
+		next.x = static_cast<unsigned short>((si / 10 - static_cast<long int>(si / 10)) * 10);
+		copy /= 10;
+		push(next);
+		++digits;
+	} while (si != 0);
+}
+SuperInteger::~SuperInteger() {
+	--c;
 }
 void SuperInteger::introduce(SuperInteger& si) {
 	if (si.isneg())
@@ -106,7 +123,7 @@ SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 					ret[n] -= 10;
 				}
 			}
-			ret.dig() = a.dig();
+			ret.dig();
 			if (a[a.dig()] + add > 9) {
 				helper.x = 1 + a[a.dig()] - 10;
 				ret.push(helper);
@@ -116,7 +133,7 @@ SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 			}
 			return ret;
 		}
-		else {
+		else if (a.isneg() && b.isneg()) {
 			for (short n = 1; n <= a.dig(); ++n) {
 				helper.x = a[n] + b[n] + add;
 				ret.push(helper);
@@ -134,8 +151,10 @@ SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 				ret.push(helper);
 				++(ret.dig());
 			}
+			ret.isneg() = true;
 			return ret;
 		}
+		else
 }
 SuperInteger operator-(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
@@ -150,43 +169,61 @@ SuperInteger operator%(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
 }
 SuperInteger operator+=(SuperInteger const& a, SuperInteger const& b) {
-	return a + b;
+	return a = a + b;
 }
 SuperInteger operator-=(SuperInteger const& a, SuperInteger const& b) {
-	return a - b;
+	return a = a - b;
 }
 SuperInteger operator*=(SuperInteger const& a, SuperInteger const& b) {
-	return a * b;
+	return a = a * b;
 }
 SuperInteger operator/=(SuperInteger const& a, SuperInteger const& b) {
-	return a / b;
+	return a = a / b;
 }
 SuperInteger operator%=(SuperInteger const& a, SuperInteger const& b) {
-	return a % b;
+	return a = a % b;
 }
 SuperInteger operator<<(SuperInteger const& a, SuperInteger const& b) {
-	if (a.dig() + b > max_size) {
-		std::cout << "Can't go past the bound." << std::endl;
-		return a;
-	}
+	if (b < 0)
+		return a >> -b;
 	else {
-		SuperInteger ret;
-		ret = a;
-		Digit helper;
-		helper.x = 0;
-		for (; b != 0; --b)
-			ret.push(helper);
+		if (a.dig() + b > max_size) {
+			std::cout << "Can't go past the bound." << std::endl;
+			return a;
+		}
+		else {
+			SuperInteger ret;
+			ret = a;
+			Digit helper;
+			helper.x = 0;
+			for (; b != 0; --b)
+				ret.push(helper);
+		}
+		return ret;
 	}
 }
 SuperInteger operator>>(SuperInteger const& a, SuperInteger const& b) {
-	if (a.dig() - b <= 0) {
-		std::cout << "There aren't as many digits in the left SuperInteger." << std::endl;
-		return a;
-	}
+	if (b < 0)
+		return a << -b;
 	else {
-		SuperInteger ret;
-		
+		if (a.dig() - b <= 0) {
+			std::cout << "There aren't as many digits as in the left SuperInteger." << std::endl;
+			return a;
+		}
+		else {
+			SuperInteger ret;
+			ret = a;
+			for (; b != 0; --b)
+				ret.pop();
+		}
+		return ret;
 	}
+}
+SuperInteger operator<<=(SuperInteger const& a, SuperInteger const& b) {
+	return a = a << b;
+}
+SuperInteger operator>>=(SuperInteger const& a, SuperInteger const& b) {
+	return a = a >> b;
 }
 bool operator<(SuperInteger const& a, SuperInteger const& b) {
 	if (a.isneg() && !(b.isneg())
@@ -237,14 +274,12 @@ bool operator>(SuperInteger const& a, SuperInteger const& b) {
 bool operator<=(SuperInteger const& a, SuperInteger const& b) {
 	if (a == b || a < b)
 		return true;
-	else
-		return false;
+	return false;
 }
 bool operator>=(SuperInteger const& a, SuperInteger const& b) {
 	if (a == b || a > b)
 		return true;
-	else
-		return false;
+	return false;
 }
 bool operator==(SuperInteger const& a, SuperInteger const& b) {
 	if (a.dig() != b.dig() || a.isneg() != b.isneg())
@@ -258,8 +293,7 @@ bool operator==(SuperInteger const& a, SuperInteger const& b) {
 bool operator!=(SuperInteger const& a, SuperInteger const& b) {
 	if (a == b)
 		return false;
-	else
-		return true;
+	return true;
 }
 std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
 	if (si.isneg())
