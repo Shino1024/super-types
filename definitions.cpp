@@ -98,7 +98,7 @@ void SuperInteger::introduce(SuperInteger& si) {
 	for (int i = 1; i <= digits; i++)
 		std::cout << si[i];
 }
-SuperInteger operator-(SuperInteger const& a) {
+SuperInteger operator-(SuperInteger& a) {
 	SuperInteger ret;
 	ret = a;
 	ret.isneg() = !(a.isneg());
@@ -168,20 +168,27 @@ SuperInteger operator/(SuperInteger const& a, SuperInteger const& b) {
 SuperInteger operator%(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
 }
-SuperInteger operator+=(SuperInteger const& a, SuperInteger const& b) {
-	return a = a + b;
+SuperInteger& SuperInteger::operator=(SuperInteger const& b) {
+	if (this == &rhs)
+		return *this;
+	integers = b.returnDeque;
+	neg = b.isneg();
+	digits = b.dig();
 }
-SuperInteger operator-=(SuperInteger const& a, SuperInteger const& b) {
-	return a = a - b;
+SuperInteger& SuperInteger::operator+=(SuperInteger const& b) {
+	return *this = (*this) + b;
 }
-SuperInteger operator*=(SuperInteger const& a, SuperInteger const& b) {
-	return a = a * b;
+SuperInteger& SuperInteger::operator-=(SuperInteger const& b) {
+	return *this = (*this) - b;
 }
-SuperInteger operator/=(SuperInteger const& a, SuperInteger const& b) {
-	return a = a / b;
+SuperInteger& SuperInteger::operator*=(SuperInteger const& b) {
+	return *this = (*this) * b;
 }
-SuperInteger operator%=(SuperInteger const& a, SuperInteger const& b) {
-	return a = a % b;
+SuperInteger& SuperInteger::operator/=(SuperInteger const& b) {
+	return *this = (*this) / b;
+}
+SuperInteger& SuperInteger::operator%=(SuperInteger const& b) {
+	return *this = (*this) % b;
 }
 SuperInteger operator<<(SuperInteger const& a, SuperInteger const& b) {
 	if (b < 0)
@@ -219,11 +226,11 @@ SuperInteger operator>>(SuperInteger const& a, SuperInteger const& b) {
 		return ret;
 	}
 }
-SuperInteger operator<<=(SuperInteger const& a, SuperInteger const& b) {
-	return a = a << b;
+SuperInteger& SuperInteger::operator<<=(SuperInteger const& b) {
+	return *this = (*this) << b;
 }
-SuperInteger operator>>=(SuperInteger const& a, SuperInteger const& b) {
-	return a = a >> b;
+SuperInteger& SuperInteger::operator>>=(SuperInteger const& b) {
+	return *this = (*this) >> b;
 }
 bool operator<(SuperInteger const& a, SuperInteger const& b) {
 	if (a.isneg() && !(b.isneg())
@@ -291,9 +298,25 @@ bool operator==(SuperInteger const& a, SuperInteger const& b) {
 	return true;
 }
 bool operator!=(SuperInteger const& a, SuperInteger const& b) {
-	if (a == b)
-		return false;
+	if (a.dig() != b.dig() || a.isneg() != b.isneg())
+		return true;
+	else
+		for (int iter = 1; iter <= a.dig() ++iter)
+			if (a[iter] == b[iter])
+				return false;
 	return true;
+}
+SuperInteger& operator++(SuperInteger&) {
+	
+}
+SuperInteger& operator++(SuperInteger&, int) {
+	
+}
+SuperInteger& operator--(SuperInteger&) {
+	
+}
+SuperInteger& operator--(SuperInteger&, int) {
+	
 }
 std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
 	if (si.isneg())
