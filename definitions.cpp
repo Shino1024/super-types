@@ -306,17 +306,54 @@ bool operator!=(SuperInteger const& a, SuperInteger const& b) {
 				return false;
 	return true;
 }
-SuperInteger& operator++(SuperInteger&) {
-	
+SuperInteger& SuperInteger::operator++() {
+	*this += 1;
+	if ((*this).dig() > max_size) {
+		std::cout << "Can't increment more." << std::endl;
+		return (*this) -= 1;
+	}
+	else if (!(*this)) {
+		(*this).isneg() = false;
+		return *this;
+	}
 }
-SuperInteger& operator++(SuperInteger&, int) {
-	
+SuperInteger& SuperInteger::operator++(int) {
+	*this += 1;
+	if ((*this).dig() > max_size) {
+		std::cout << "Can't increment more." << std::endl;
+		return (*this) -= 1;
+	}
+	else if (!(*this)) {
+		(*this).isneg() = false;
+		return *this;
+	}
 }
-SuperInteger& operator--(SuperInteger&) {
-	
+SuperInteger& SuperInteger::operator--() {
+	*this -= 1;
+	if ((*this).dig() > max_size) {
+		std::cout << "Can't increment more." << std::endl;
+		return (*this) += 1;
+	}
+	else if (*this == -1) {
+		(*this).isneg() = true;
+		return *this;
+	}
 }
-SuperInteger& operator--(SuperInteger&, int) {
-	
+SuperInteger& SuperInteger::operator--(int) {
+	*this -= 1;
+	if ((*this).dig() > max_size) {
+		std::cout << "Can't increment more." << std::endl;
+		return (*this) += 1;
+	}
+	else if (*this == -1) {
+		(*this).isneg() = true;
+		return *this;
+	}
+}
+bool operator!(SuperInteger const& a) {
+	if (a == 0)
+		return true;
+	return false;
 }
 std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
 	if (si.isneg())
