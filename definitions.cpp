@@ -13,17 +13,17 @@ void swap(X a, X b) {
 }
 bool SuperInteger::check(char si[]) {
 	if (si[0] == '\0') {
-		std::cout << "Empty string." << std::endl;
+		std::cerr << "Empty string." << std::endl;
 		return false;
 	}
 	else if (((si[0] <= '0' || si[0] > '9') && si[0] != '-') || (si[0] == '-' && si[1] <= '0' && si[1] > '9') || si[0] == '0') {
-		std::cout << "Inappropriate SuperInteger, creation terminated." << std::endl;
+		std::cerr << "Inappropriate SuperInteger, creation terminated." << std::endl;
 		return false;
 	}
 	else {
 		for (int i = 1; i < static_cast<int>(sizeof(si)) - 1; i++)
 			if (si[i] <= '0' || si[i] > '9') {
-				std::cout << "Wrong character found, creation of the new SuperInteger terminated." << std::endl;
+				std::cerr << "Wrong character found, creation of the new SuperInteger terminated." << std::endl;
 				return false;
 			}
 	}
@@ -44,7 +44,7 @@ SuperInteger::SuperInteger(char si[]) {
 	else
 		digits = static_cast<int>(sizeof(si)) - 1;
 	if (digits > max_size)
-		std::cout << "Too big to input!" << std::endl;
+		std::cerr << "Too big to input!" << std::endl;
 	else {
 		++c;
 		Digit next;
@@ -106,7 +106,7 @@ SuperInteger operator-(SuperInteger& a) {
 }
 SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 	if (a.dig() + 1 > max_size || b.dig() + 1 > max_size) {
-		std::cout << "Further addition impossible, the upper bound is reached." << std::endl;
+		std::cerr << "Further addition impossible, the upper bound is reached." << std::endl;
 		return a;
 	}
 	SuperInteger ret;
@@ -195,7 +195,7 @@ SuperInteger operator<<(SuperInteger const& a, SuperInteger const& b) {
 		return a >> -b;
 	else {
 		if (a.dig() + b > max_size) {
-			std::cout << "Can't go past the bound." << std::endl;
+			std::cerr << "Can't go past the bound." << std::endl;
 			return a;
 		}
 		else {
@@ -214,7 +214,7 @@ SuperInteger operator>>(SuperInteger const& a, SuperInteger const& b) {
 		return a << -b;
 	else {
 		if (a.dig() - b <= 0) {
-			std::cout << "There aren't as many digits as in the left SuperInteger." << std::endl;
+			std::cerr << "There aren't as many digits as in the left SuperInteger." << std::endl;
 			return a;
 		}
 		else {
@@ -309,7 +309,7 @@ bool operator!=(SuperInteger const& a, SuperInteger const& b) {
 SuperInteger& SuperInteger::operator++() {
 	*this += 1;
 	if ((*this).dig() > max_size) {
-		std::cout << "Can't increment more." << std::endl;
+		std::cerr << "Can't increment more." << std::endl;
 		return (*this) -= 1;
 	}
 	else if (!(*this)) {
@@ -320,7 +320,7 @@ SuperInteger& SuperInteger::operator++() {
 SuperInteger& SuperInteger::operator++(int) {
 	*this += 1;
 	if ((*this).dig() > max_size) {
-		std::cout << "Can't increment more." << std::endl;
+		std::cerr << "Can't increment more." << std::endl;
 		return (*this) -= 1;
 	}
 	else if (!(*this)) {
@@ -331,7 +331,7 @@ SuperInteger& SuperInteger::operator++(int) {
 SuperInteger& SuperInteger::operator--() {
 	*this -= 1;
 	if ((*this).dig() > max_size) {
-		std::cout << "Can't increment more." << std::endl;
+		std::cerr << "Can't increment more." << std::endl;
 		return (*this) += 1;
 	}
 	else if (*this == -1) {
@@ -342,7 +342,7 @@ SuperInteger& SuperInteger::operator--() {
 SuperInteger& SuperInteger::operator--(int) {
 	*this -= 1;
 	if ((*this).dig() > max_size) {
-		std::cout << "Can't increment more." << std::endl;
+		std::cerr << "Can't increment more." << std::endl;
 		return (*this) += 1;
 	}
 	else if (*this == -1) {
@@ -361,4 +361,20 @@ std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
 	for (int i = 1; i <= digits; i++)
 		out << si[i];
 	return out;
+}
+SuperInteger operator^(SuperInteger const& a, SuperInteger const b) {
+	if (b < 0) {
+		std::cerr << "Can power only to natural exponents." << std::endl;
+		return a;
+	}
+	SuperInteger ret = 1;
+	while (b > 0) {
+		ret *= a;
+		--b;
+		if (ret.dig() > max_size) {
+			std::cerr << "Went past the bound, returning the original value." << std::endl;
+			return a;
+		}
+	}
+	return ret;
 }
