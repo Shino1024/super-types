@@ -92,6 +92,27 @@ SuperInteger::SuperInteger(long double sid) {
 SuperInteger::~SuperInteger() {
 	--c;
 }
+SuperInteger::SuperInteger(std::string& a) {
+	char* si = a.c_str();
+	if (!(check(si))
+		throw std::cerr << "Inappropriate number!" << std::endl;
+	if (si[0] == '-') {
+		digits = static_cast<int>(sizeof(si)) - 2;
+		neg = true;
+	}
+	else
+		digits = static_cast<int>(sizeof(si)) - 1;
+	if (digits > max_size)
+		std::cerr << "Too big to input!" << std::endl;
+	else {
+		++c;
+		Digit next;
+		for (short iter = 0; si[iter] != '\0'; ++iter) {
+			next.x = static_cast<unsigned short>(si[iter] - 48);
+			ins(next);
+		}
+	}
+}
 void SuperInteger::introduce(SuperInteger& si) {
 	if (si.isneg())
 		std::cout << '-';

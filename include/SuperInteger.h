@@ -20,6 +20,7 @@ class SuperInteger {
 		int& operator[](int a) {return integers.at(a - 1).x;}
 		SuperInteger(char[]);
 		SuperInteger(long int);
+		SuperInteger(std::string&);
 		void introduce(SuperInteger&) const;
 		bool check(char[]);
 		SuperInteger& operator=(SuperInteger&, SuperInteger const&);
