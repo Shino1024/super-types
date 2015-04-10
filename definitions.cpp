@@ -125,6 +125,22 @@ SuperInteger operator-(SuperInteger& a) {
 	ret.isneg() = !(a.isneg());
 	return ret;
 }
+SuperInteger operator^(SuperInteger const& a, SuperInteger const b) {
+	if (b < 0) {
+		std::cerr << "Can power only to natural exponents." << std::endl;
+		return a;
+	}
+	SuperInteger ret = 1;
+	while (b > 0) {
+		ret *= a;
+		--b;
+		if (ret.dig() > max_size) {
+			std::cerr << "Went past the bound, returning the original value." << std::endl;
+			return a;
+		}
+	}
+	return ret;
+}
 SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 	if (a.dig() + 1 > max_size || b.dig() + 1 > max_size) {
 		std::cerr << "Further addition impossible, the upper bound is reached." << std::endl;
@@ -252,6 +268,9 @@ SuperInteger& SuperInteger::operator<<=(SuperInteger const& b) {
 }
 SuperInteger& SuperInteger::operator>>=(SuperInteger const& b) {
 	return *this = (*this) >> b;
+}
+SuperInteger& SuperInteger::operator^=(SuperInteger const& b) {
+	return *this = (*this) ^ b;
 }
 bool operator<(SuperInteger const& a, SuperInteger const& b) {
 	if (a.isneg() && !(b.isneg())
@@ -382,20 +401,4 @@ std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
 	for (int i = 1; i <= digits; i++)
 		out << si[i];
 	return out;
-}
-SuperInteger operator^(SuperInteger const& a, SuperInteger const b) {
-	if (b < 0) {
-		std::cerr << "Can power only to natural exponents." << std::endl;
-		return a;
-	}
-	SuperInteger ret = 1;
-	while (b > 0) {
-		ret *= a;
-		--b;
-		if (ret.dig() > max_size) {
-			std::cerr << "Went past the bound, returning the original value." << std::endl;
-			return a;
-		}
-	}
-	return ret;
 }
