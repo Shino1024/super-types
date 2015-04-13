@@ -1,6 +1,3 @@
-#include <iostream>
-#include <cstdlib>
-#include <vector>
 #include "include/SuperInteger.h"
 
 const int max_size = 4096;
