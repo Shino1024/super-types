@@ -11,9 +11,9 @@ void swap(X a, X b) {
 Digit::Digit(short a) {
 	x = a;
 }
-int Digit::operator=(short a) {
-	x = a;
-	return a;
+Digit& Digit::operator=(short a) {
+	this->x = a;
+	return *this;
 }
 bool SuperInteger::check(char si[]) {
 	if (si[0] == '\0') {
