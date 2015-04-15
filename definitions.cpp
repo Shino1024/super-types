@@ -15,6 +15,12 @@ Digit& Digit::operator=(short a) {
 	this->x = a;
 	return *this;
 }
+SuperInteger::operator short() {
+}
+SuperInteger::operator int() {
+}
+SuperInteger::operator long() {
+}
 bool SuperInteger::check(char si[]) {
 	if (si[0] == '\0') {
 		std::cerr << "Empty string." << std::endl;

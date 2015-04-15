@@ -13,6 +13,9 @@ class SuperInteger {
 		bool& neg() {return n;}
 		int& digc() {return digits;}
 	public:
+		operator short();
+		operator int();
+		operator long();
 		bool isneg() {return n;}
 		int dig() {return digits;}
 		std::deque<Digit> returnDeque() const {return integers;}
