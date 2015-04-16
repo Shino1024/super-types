@@ -15,11 +15,23 @@ Digit& Digit::operator=(short a) {
 	this->x = a;
 	return *this;
 }
+SuperInteger::operator char() {
+
+}
 SuperInteger::operator short() {
+	
 }
 SuperInteger::operator int() {
 }
 SuperInteger::operator long() {
+}
+SuperInteger::operator unsigned char() {
+}
+SuperInteger::operator unsigned short() {
+}
+SuperInteger::operator unsigned int() {
+}
+SuperInteger::operator unsigned long() {
 }
 bool SuperInteger::check(char si[]) {
 	if (si[0] == '\0') {
@@ -121,7 +133,7 @@ SuperInteger::SuperInteger(std::string& a) {
 		}
 	}
 }
-void SuperInteger::introduce(SuperInteger& si) {
+void SuperInteger::introduce(SuperInteger& si) const {
 	if (si.neg())
 		std::cout << '-';
 	for (int i = 1; i <= digits; i++)

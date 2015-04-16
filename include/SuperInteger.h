@@ -2,20 +2,25 @@
 struct Digit {
 	unsigned short x: 4;
 	Digit(short);
-	short& operator=(short);
+	Digit& operator=(short);
 };
 class SuperInteger {
 	private:
 		std::deque<Digit> integers;
 		int digits = 1;
-		static int c;
+		static int c = 0;
 		bool n = false;
 		bool& neg() {return n;}
 		int& digc() {return digits;}
 	public:
+		operator char();
 		operator short();
 		operator int();
 		operator long();
+		operator unsigned char();
+		operator unsigned short();
+		operator unsigned int();
+		operator unsigned long();
 		bool isneg() {return n;}
 		int dig() {return digits;}
 		std::deque<Digit> returnDeque() const {return integers;}
