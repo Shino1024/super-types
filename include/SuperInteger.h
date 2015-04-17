@@ -53,6 +53,8 @@ class SuperInteger {
 		friend SuperInteger operator^(SuperInteger const&, SuperInteger const&);
 		SuperInteger& operator^=(SuperInteger const&);
 		friend SuperInteger operator-(SuperInteger const&);
+		friend SuperInteger operator&(SuperInteger const&, SuperInteger const&);
+		SuperInteger& operator&=(SuperInteger const&);
 		SuperInteger& operator++();
 		SuperInteger& operator++(int);
 		SuperInteger& operator--();

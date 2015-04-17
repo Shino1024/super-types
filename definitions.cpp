@@ -370,6 +370,21 @@ bool operator!=(SuperInteger const& a, SuperInteger const& b) {
 				return false;
 	return true;
 }
+SuperInteger operator&(SuperInteger const& a, SuperInteger const& b) {
+	if (a.dig() + b.dig() > max_size) {
+		std::cerr << "Can't concatenate, the output size is too big." << std::endl;
+		return a;
+	}
+	SuperInteger ret;
+	for (short i = 1; i <= a.dig(); ++i)
+		ret.push(a[i]);
+	for (short i = 1; i <= b.dig(); ++i)
+		ret.push(b[i]);
+	return ret;
+}
+SuperInteger& SuperInteger::operator&=(SuperInteger const& b) {
+	return *this = (*this) & b;
+}
 SuperInteger& SuperInteger::operator++() {
 	*this += 1;
 	if ((*this).digc() > max_size) {
