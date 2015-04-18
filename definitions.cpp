@@ -134,7 +134,7 @@ SuperInteger::SuperInteger(std::string& a) {
 	}
 }
 void SuperInteger::introduce(SuperInteger& si) const {
-	if (si.neg())
+	if (si.isneg())
 		std::cout << '-';
 	for (int i = 1; i <= digits; i++)
 		std::cout << si[i];
@@ -142,7 +142,7 @@ void SuperInteger::introduce(SuperInteger& si) const {
 SuperInteger operator-(SuperInteger& a) {
 	SuperInteger ret;
 	ret = a;
-	ret.neg() = !(a.neg());
+	ret.neg() = !(a.isneg());
 	return ret;
 }
 SuperInteger operator^(SuperInteger const& a, SuperInteger const b) {
@@ -173,7 +173,7 @@ SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
 	Digit helper;
 	short add = 0;
-	if (!(a.neg()) && !(b.neg()))
+	if (!(a.isneg()) && !(b.isneg()))
 		if (a >= b) {
 			for (short n = 1; n <= b.digc(); ++n) {
 				helper = a[n] + b[n] + add;
@@ -194,7 +194,7 @@ SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 			}
 			return ret;
 		}
-		else if (a.neg() && b.neg()) {
+		else if (a.isneg() && b.isneg()) {
 			for (short n = 1; n <= a.digc(); ++n) {
 				helper.x = a[n] + b[n] + add;
 				ret.push(helper);
@@ -212,7 +212,7 @@ SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 				ret.push(helper);
 				++(ret.digc());
 			}
-			ret.neg() = true;
+			ret.isneg() = true;
 			return ret;
 		}
 		else
@@ -233,7 +233,7 @@ SuperInteger& SuperInteger::operator=(SuperInteger const& b) {
 	if (this == &b)
 		return *this;
 	integers = b.returnDeque;
-	neg = b.neg();
+	neg = b.isneg();
 	digits = b.digc();
 }
 SuperInteger& SuperInteger::operator+=(SuperInteger const& b) {
@@ -297,17 +297,17 @@ SuperInteger& SuperInteger::operator^=(SuperInteger const& b) {
 	return *this = (*this) ^ b;
 }
 bool operator<(SuperInteger const& a, SuperInteger const& b) {
-	if (a.neg() && !(b.neg())
+	if (a.isneg() && !(b.isneg())
 		return true;
-	else if (!(a.neg()) && b.neg())
+	else if (!(a.isneg()) && b.isneg())
 		return false;
-	else if (a.digc() > b.digc() && a.neg() && b.neg())
+	else if (a.digc() > b.digc() && a.isneg() && b.isneg())
 		return true;
-	else if (a.digc() > b.digc() && !(a.neg()) && !(b.neg()))
+	else if (a.digc() > b.digc() && !(a.isneg()) && !(b.isneg()))
 		return false;
-	else if (a.digc() < b.digc() && a.neg() && b.neg())
+	else if (a.digc() < b.digc() && a.isneg() && b.isneg())
 		return false;
-	else if (a.digc() < b.digc() && !(a.neg()) && !(b.neg()))
+	else if (a.digc() < b.digc() && !(a.isneg()) && !(b.isneg()))
 		return true;
 	else
 		for (int iter = 0; iter < a.digc(); ++iter)
@@ -320,17 +320,17 @@ bool operator<(SuperInteger const& a, SuperInteger const& b) {
 	return false;
 }
 bool operator>(SuperInteger const& a, SuperInteger const& b) {
-	if (a.neg() && !(b.neg())
+	if (a.isneg() && !(b.isneg())
 		return false;
-	else if (!(a.neg()) && b.neg())
+	else if (!(a.isneg()) && b.isneg())
 		return true;
-	else if (a.digc() > b.digc() && a.neg() && b.neg())
+	else if (a.digc() > b.digc() && a.isneg() && b.isneg())
 		return false;
-	else if (a.digc() > b.digc() && !(a.neg()) && !(b.neg()))
+	else if (a.digc() > b.digc() && !(a.isneg()) && !(b.isneg()))
 		return true;
-	else if (a.digc() < b.digc() && a.neg() && b.neg())
+	else if (a.digc() < b.digc() && a.isneg() && b.isneg())
 		return true;
-	else if (a.digc() < b.digc() && !(a.neg()) && !(b.neg()))
+	else if (a.digc() < b.digc() && !(a.isneg()) && !(b.isneg()))
 		return false;
 	else
 		for (int iter = 0; iter < a.digc(); ++iter)
@@ -353,7 +353,7 @@ bool operator>=(SuperInteger const& a, SuperInteger const& b) {
 	return false;
 }
 bool operator==(SuperInteger const& a, SuperInteger const& b) {
-	if (a.digc() != b.digc() || a.neg() != b.neg())
+	if (a.digc() != b.digc() || a.isneg() != b.isneg())
 		return false;
 	else
 		for (int iter = 1; iter <= a.digc() ++iter)
@@ -362,7 +362,7 @@ bool operator==(SuperInteger const& a, SuperInteger const& b) {
 	return true;
 }
 bool operator!=(SuperInteger const& a, SuperInteger const& b) {
-	if (a.digc() != b.digc() || a.neg() != b.neg())
+	if (a.digc() != b.digc() || a.isneg() != b.isneg())
 		return true;
 	else
 		for (int iter = 1; iter <= a.digc() ++iter)
@@ -380,6 +380,7 @@ SuperInteger operator&(SuperInteger const& a, SuperInteger const& b) {
 		ret.push(a[i]);
 	for (short i = 1; i <= b.dig(); ++i)
 		ret.push(b[i]);
+	if 
 	return ret;
 }
 SuperInteger& SuperInteger::operator&=(SuperInteger const& b) {
@@ -435,7 +436,7 @@ bool operator!(SuperInteger const& a) {
 	return false;
 }
 std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
-	if (si.neg())
+	if (si.isneg())
 		out << '-';
 	for (int i = 1; i <= digits; i++)
 		out << si[i];
