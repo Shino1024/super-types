@@ -10,9 +10,9 @@ class SuperInteger {
 		int digits = 1;
 		static int c = 0;
 		bool n = false;
-		bool& neg() {return n;}
-		int& digc() {return digits;}
+		int& dig() {return digits;}
 	public:
+		bool& neg() {return n;}
 		operator char();
 		operator short();
 		operator int();
@@ -21,8 +21,7 @@ class SuperInteger {
 		operator unsigned short();
 		operator unsigned int();
 		operator unsigned long();
-		bool isneg() {return n;}
-		int dig() {return digits;}
+		int digc() {return digits;}
 		std::deque<Digit> returnDeque() const {return integers;}
 		void ins(Digit a) {integers.push_front(a);}
 		void push(Digit a) {integers.push_back(a);}
