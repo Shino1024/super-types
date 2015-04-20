@@ -66,4 +66,5 @@ class SuperInteger {
 		friend bool operator!=(SuperInteger const&, SuperInteger const&);
 		friend bool operator!(SuperInteger const&);
 		friend std::ostream& operator<<(std::ostream&, SuperInteger const&);
+		friend std::ostream& operator>>(std::ostream&, SuperInteger const&);
 };

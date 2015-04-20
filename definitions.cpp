@@ -384,6 +384,7 @@ SuperInteger operator&(SuperInteger const& a, SuperInteger const& b) {
 		ret.neg() = false;
 	else
 		ret.neg() = true;
+	ret.dig();
 	return ret;
 }
 SuperInteger& SuperInteger::operator&=(SuperInteger const& b) {
@@ -444,4 +445,7 @@ std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
 	for (int i = 1; i <= digits; i++)
 		out << si[i];
 	return out;
+}
+std::ostream& operator>>(std::ostream& out, SuperInteger const& si) {
+	
 }
