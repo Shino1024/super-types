@@ -3,7 +3,7 @@
 const int max_size = 4096;
 
 template <typename X>
-void swap(X a, X b) {
+void swap(X& a, X& b) {
 	X c = a;
 	a = b;
 	b = c;
@@ -145,7 +145,7 @@ SuperInteger operator-(SuperInteger& a) {
 	ret.neg() = !(a.neg());
 	return ret;
 }
-SuperInteger operator^(SuperInteger const& a, SuperInteger const b) {
+SuperInteger operator^(SuperInteger const& a, SuperInteger const& b) {
 	if (b < 0) {
 		std::cerr << "Can power only to natural exponents." << std::endl;
 		return a;
@@ -155,9 +155,8 @@ SuperInteger operator^(SuperInteger const& a, SuperInteger const b) {
 		return a;
 	}
 	SuperInteger ret = 1;
-	while (b > 0) {
+	while (b-- > 0) {
 		ret *= a;
-		--b;
 		if (ret.digc() > max_size) {
 			std::cerr << "Went past the bound, returning the original value." << std::endl;
 			return a;
@@ -260,8 +259,7 @@ SuperInteger operator<<(SuperInteger const& a, SuperInteger const& b) {
 			return a;
 		}
 		else {
-			SuperInteger ret;
-			ret = a;
+			SuperInteger ret = a;
 			Digit helper;
 			helper = 0;
 			for (; b != 0; --b)
@@ -279,8 +277,7 @@ SuperInteger operator>>(SuperInteger const& a, SuperInteger const& b) {
 			return a;
 		}
 		else {
-			SuperInteger ret;
-			ret = a;
+			SuperInteger ret = a;
 			for (; b != 0; --b)
 				ret.pop();
 		}
@@ -371,20 +368,19 @@ bool operator!=(SuperInteger const& a, SuperInteger const& b) {
 	return true;
 }
 SuperInteger operator&(SuperInteger const& a, SuperInteger const& b) {
-	if (a.dig() + b.dig() > max_size) {
+	if (a.digc() + b.digc() > max_size) {
 		std::cerr << "Can't concatenate, the output size is too big." << std::endl;
 		return a;
 	}
 	SuperInteger ret;
-	for (short i = 1; i <= a.dig(); ++i)
+	for (short i = 1; i <= a.digc(); ++i)
 		ret.push(a[i]);
-	for (short i = 1; i <= b.dig(); ++i)
+	for (short i = 1; i <= b.digc(); ++i)
 		ret.push(b[i]);
 	if (a.neg() && b.neg() || !(a.neg() && b.neg())
 		ret.neg() = false;
 	else
 		ret.neg() = true;
-	ret.dig();
 	return ret;
 }
 SuperInteger& SuperInteger::operator&=(SuperInteger const& b) {
