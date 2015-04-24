@@ -23,22 +23,10 @@ class SuperInteger {
 		operator unsigned long();
 		int digc() {return digits;}
 		std::deque<Digit> returnDeque() const {return integers;}
-		void ins(Digit a) {
-			integers.push_front(a);
-			++digits;
-		}
-		void push(Digit a) {
-			integers.push_back(a);
-			++digits;
-		}
-		void pop() {
-			integers.pop_front();
-			--digits;
-		}
-		void drop() {
-			integers.pop_back();
-			--digits;
-		}
+		void ins(Digit a) {integers.push_front(a);}
+		void push(Digit a) {integers.push_back(a);}
+		void pop() {integers.pop_front();}
+		void drop() {integers.pop_back();}
 		int count() const {return c;}
 		int& operator[](int a) {return integers.at(a - 1).x;}
 		SuperInteger(char[]);
