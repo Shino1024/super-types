@@ -21,6 +21,7 @@ class SuperInteger {
 		operator unsigned short();
 		operator unsigned int();
 		operator unsigned long();
+		operator std::string();
 		int digc() {return digits;}
 		std::deque<Digit> returnDeque() const {return integers;}
 		void ins(Digit a) {integers.push_front(a);}
@@ -58,13 +59,13 @@ class SuperInteger {
 		SuperInteger& operator++(int);
 		SuperInteger& operator--();
 		SuperInteger& operator--(int);
-		friend bool operator<(SuperInteger const&, SuperInteger const&);
-		friend bool operator<=(SuperInteger const&, SuperInteger const&);
-		friend bool operator>(SuperInteger const&, SuperInteger const&);
-		friend bool operator>=(SuperInteger const&, SuperInteger const&);
-		friend bool operator==(SuperInteger const&, SuperInteger const&);
-		friend bool operator!=(SuperInteger const&, SuperInteger const&);
-		friend bool operator!(SuperInteger const&);
+		friend bool operator<(SuperInteger const&, SuperInteger const&) const;
+		friend bool operator<=(SuperInteger const&, SuperInteger const&) const;
+		friend bool operator>(SuperInteger const&, SuperInteger const&) const;
+		friend bool operator>=(SuperInteger const&, SuperInteger const&) const;
+		friend bool operator==(SuperInteger const&, SuperInteger const&) const;
+		friend bool operator!=(SuperInteger const&, SuperInteger const&) const;
+		friend bool operator!(SuperInteger const&) const;
 		friend std::ostream& operator<<(std::ostream&, SuperInteger const&);
 		friend std::ostream& operator>>(std::ostream&, SuperInteger const&);
 };
