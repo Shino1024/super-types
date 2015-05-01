@@ -30,6 +30,7 @@ class SuperInteger {
 		void drop() {integers.pop_back();}
 		int count() const {return c;}
 		int& operator[](int a) {return integers.at(a - 1).x;}
+		SuperInteger(std::string&, int);
 		SuperInteger(char[]);
 		SuperInteger(long int);
 		SuperInteger(std::string&);

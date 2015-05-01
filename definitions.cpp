@@ -54,6 +54,9 @@ SuperInteger::SuperInteger() {
 	++c;
 	push(0);
 }
+SuperInteger::SuperInteger(std::string si, int a) {
+	
+}
 SuperInteger::SuperInteger(char si[]) {
 	if (!(check(si))
 		throw std::cerr << "Inappropriate number!" << std::endl;
