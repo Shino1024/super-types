@@ -11,6 +11,9 @@ void swap(X& a, X& b) {
 Digit::Digit(short a) {
 	x = a;
 }
+Digit::Digit(int a) {
+	x = static_cast<short>(a);
+}
 Digit& Digit::operator=(short a) {
 	this->x = a;
 	return *this;
@@ -33,64 +36,53 @@ SuperInteger::operator unsigned int() {
 }
 SuperInteger::operator unsigned long() {
 }
-bool SuperInteger::check(char si[]) {
-	if (si[0] == '\0') {
-		std::cerr << "Empty string." << std::endl;
+bool check(char si[]) {
+	if (si[0] == '\0')
 		return false;
-	}
-	else if (((si[0] <= '0' || si[0] > '9') && si[0] != '-') || (si[0] == '-' && si[1] <= '0' && si[1] > '9') || si[0] == '0') {
-		std::cerr << "Inappropriate SuperInteger, creation terminated." << std::endl;
+	else if (((si[0] <= '0' || si[0] > '9') && si[0] != '-') || (si[0] == '-' && si[1] <= '0' && si[1] > '9') || si[0] == '0')
 		return false;
-	}
-	else {
+	else
 		for (int i = 1; i < static_cast<int>(sizeof(si)) - 1; i++)
-			if (si[i] <= '0' || si[i] > '9') {
-				std::cerr << "Wrong character found, creation of the new SuperInteger terminated." << std::endl;
+			if (si[i] <= '0' || si[i] > '9')
 				return false;
-			}
-	}
+	return true;
 }
 SuperInteger::SuperInteger() {
 	++c;
 	push(0);
 }
 SuperInteger::SuperInteger(std::string si, int a) {
-	
+	if (a > 37 || a < 1)
+		push(0);
 }
 SuperInteger::SuperInteger(char si[]) {
 	if (!(check(si))
-		throw std::cerr << "Inappropriate number!" << std::endl;
+		push(0);
 	if (si[0] == '-') {
 		digits = static_cast<int>(sizeof(si)) - 2;
-		neg = true;
+		n = true;
 	}
 	else
 		digits = static_cast<int>(sizeof(si)) - 1;
 	if (digits > max_size)
-		std::cerr << "Too big to input!" << std::endl;
+		push(0);
 	else {
 		++c;
-		Digit next;
-		for (short iter = 0; si[iter] != '\0'; ++iter) {
-			next = static_cast<short>(si[iter] - 48);
-			ins(next);
-		}
+		for (short iter = 0; si[iter] != '\0'; ++iter)
+			ins(static_cast<short>(si[iter] - 48));
 	}
 }
 SuperInteger::SuperInteger(long int si) {
 	++c;
 	if (si < 0) {
-		neg = true;
+		n = true;
 		si = -si;
 	}
 	else
-		neg = false;
-	long int copy = si;
-	Digit next;
+		n = false;
 	do {
-		next = static_cast<short>((si / 10 - static_cast<long int>(si / 10)) * 10);
-		copy /= 10;
-		push(next);
+		push(static_cast<short>((static_cast<long double>(si) / 10 - si / 10) * 10));
+		si >> 1;
 		++digits;
 	} while (si != 0);
 }
@@ -98,17 +90,14 @@ SuperInteger::SuperInteger(long double sid) {
 	long int si = sid;
 	++c;
 	if (si < 0) {
-		neg = true;
+		n = true;
 		si = -si;
 	}
 	else
-		neg = false;
-	long int copy = si;
-	Digit next;
+		n = false;
 	do {
-		next = static_cast<short>((si / 10 - static_cast<long int>(si / 10)) * 10);
-		copy /= 10;
-		push(next);
+		push(static_cast<short>((static_cast<long double>(si) / 10 - si / 10) * 10));
+		si >> 1;
 		++digits;
 	} while (si != 0);
 }
@@ -149,14 +138,8 @@ SuperInteger operator-(SuperInteger& a) {
 	return ret;
 }
 SuperInteger operator^(SuperInteger const& a, SuperInteger const& b) {
-	if (b < 0) {
-		std::cerr << "Can power only to natural exponents." << std::endl;
+	if (b < 0 || b > 256)
 		return a;
-	}
-	if (b > 256) {
-		std::cerr << "Can't power to more than 256." << std::endl;
-		return a;
-	}
 	SuperInteger ret = 1;
 	while (b-- > 0) {
 		ret *= a;
@@ -235,7 +218,7 @@ SuperInteger& SuperInteger::operator=(SuperInteger const& b) {
 	if (this == &b)
 		return *this;
 	integers = b.returnDeque;
-	neg = b.neg();
+	n = b.neg();
 	digits = b.digc();
 }
 SuperInteger& SuperInteger::operator+=(SuperInteger const& b) {
