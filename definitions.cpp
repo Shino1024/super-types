@@ -107,7 +107,7 @@ SuperInteger::~SuperInteger() {
 SuperInteger::SuperInteger(std::string& a) {
 	char* si = a.c_str();
 	if (!(check(si))
-		throw std::cerr << "Inappropriate number!" << std::endl;
+		push(0);
 	if (si[0] == '-') {
 		digits = static_cast<int>(sizeof(si)) - 2;
 		neg = true;
@@ -115,14 +115,11 @@ SuperInteger::SuperInteger(std::string& a) {
 	else
 		digits = static_cast<int>(sizeof(si)) - 1;
 	if (digits > max_size)
-		std::cerr << "Too big to input!" << std::endl;
+		push(0);
 	else {
 		++c;
-		Digit next;
-		for (short iter = 0; si[iter] != '\0'; ++iter) {
-			next = static_cast<short>(si[iter] - 48);
-			ins(next);
-		}
+		for (short iter = 0; si[iter] != '\0'; ++iter)
+			ins(static_cast<short>(si[iter] - 48));
 	}
 }
 void SuperInteger::introduce(SuperInteger& si) const {
@@ -143,18 +140,14 @@ SuperInteger operator^(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret = 1;
 	while (b-- > 0) {
 		ret *= a;
-		if (ret.digc() > max_size) {
-			std::cerr << "Went past the bound, returning the original value." << std::endl;
+		if (ret.digc() > max_size)
 			return a;
-		}
 	}
 	return ret;
 }
 SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
-	if (a.digc() + 1 > max_size || b.digc() + 1 > max_size) {
-		std::cerr << "Further addition impossible, the upper bound is reached." << std::endl;
+	if (a.digc() + 1 > max_size || b.digc() + 1 > max_size)
 		return a;
-	}
 	SuperInteger ret;
 	Digit helper;
 	short add = 0;
@@ -240,10 +233,8 @@ SuperInteger operator<<(SuperInteger const& a, SuperInteger const& b) {
 	if (b < 0)
 		return a >> -b;
 	else {
-		if (a.digc() + b > max_size) {
-			std::cerr << "Can't go past the bound." << std::endl;
+		if (a.digc() + b > max_size)
 			return a;
-		}
 		else {
 			SuperInteger ret = a;
 			Digit helper;
@@ -258,10 +249,8 @@ SuperInteger operator>>(SuperInteger const& a, SuperInteger const& b) {
 	if (b < 0)
 		return a << -b;
 	else {
-		if (a.digc() - b <= 0) {
-			std::cerr << "There aren't as many digits as in the left SuperInteger." << std::endl;
+		if (a.digc() - b <= 0)
 			return a;
-		}
 		else {
 			SuperInteger ret = a;
 			for (; b != 0; --b)
@@ -354,10 +343,8 @@ bool operator!=(SuperInteger const& a, SuperInteger const& b) {
 	return true;
 }
 SuperInteger operator&(SuperInteger const& a, SuperInteger const& b) {
-	if (a.digc() + b.digc() > max_size) {
-		std::cerr << "Can't concatenate, the output size is too big." << std::endl;
+	if (a.digc() + b.digc() > max_size)
 		return a;
-	}
 	SuperInteger ret;
 	for (short i = 1; i <= a.digc(); ++i)
 		ret.push(a[i]);
@@ -374,10 +361,8 @@ SuperInteger& SuperInteger::operator&=(SuperInteger const& b) {
 }
 SuperInteger& SuperInteger::operator++() {
 	*this += 1;
-	if ((*this).digc() > max_size) {
-		std::cerr << "Can't increment more." << std::endl;
+	if ((*this).digc() > max_size)
 		return (*this) -= 1;
-	}
 	else if (!(*this)) {
 		(*this).neg() = false;
 		return *this;
@@ -385,10 +370,8 @@ SuperInteger& SuperInteger::operator++() {
 }
 SuperInteger& SuperInteger::operator++(int) {
 	*this += 1;
-	if ((*this).digc() > max_size) {
-		std::cerr << "Can't increment more." << std::endl;
+	if ((*this).digc() > max_size)
 		return (*this) -= 1;
-	}
 	else if (!(*this)) {
 		(*this).neg() = false;
 		return *this;
@@ -396,10 +379,8 @@ SuperInteger& SuperInteger::operator++(int) {
 }
 SuperInteger& SuperInteger::operator--() {
 	*this -= 1;
-	if ((*this).digc() > max_size) {
-		std::cerr << "Can't increment more." << std::endl;
-		return (*this) += 1;
-	}
+	if ((*this).digc() > max_size)
+		return (*this) -= 1;
 	else if (*this == -1) {
 		(*this).neg() = true;
 		return *this;
@@ -407,10 +388,8 @@ SuperInteger& SuperInteger::operator--() {
 }
 SuperInteger& SuperInteger::operator--(int) {
 	*this -= 1;
-	if ((*this).digc() > max_size) {
-		std::cerr << "Can't increment more." << std::endl;
-		return (*this) += 1;
-	}
+	if ((*this).digc() > max_size)
+		return (*this) -= 1;
 	else if (*this == -1) {
 		(*this).neg() = true;
 		return *this;
