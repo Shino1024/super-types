@@ -19,22 +19,39 @@ Digit& Digit::operator=(short a) {
 	return *this;
 }
 SuperInteger::operator char() {
-
+	if (*this > std::numeric_limits<char>::max() || *this < std::numeric_limits<char>::min())
+		return 0;
 }
 SuperInteger::operator short() {
-	
+	if (*this > std::numeric_limits<short>::max() || *this < std::numeric_limits<short>::min())
+		return 0;
 }
 SuperInteger::operator int() {
+	if (*this > std::numeric_limits<int>::max() || *this < std::numeric_limits<int>::min())
+		return 0;
 }
 SuperInteger::operator long() {
+	if (*this > std::numeric_limits<long>::max() || *this < std::numeric_limits<long>::min())
+		return 0;
 }
 SuperInteger::operator unsigned char() {
+	if (*this > std::numeric_limits<unsigned char>::max() || *this < std::numeric_limits<unsigned char>::min())
+		return 0;
 }
 SuperInteger::operator unsigned short() {
+	if (*this > std::numeric_limits<unsigned short>::max() || *this < std::numeric_limits<unsigned short>::min())
+		return 0;
 }
 SuperInteger::operator unsigned int() {
+	if (*this > std::numeric_limits<unsigned int>::max() || *this < std::numeric_limits<unsigned int>::min())
+		return 0;
 }
 SuperInteger::operator unsigned long() {
+	if (*this > std::numeric_limits<unsigned long>::max() || *this < std::numeric_limits<unsigned long>::min())
+		return 0;
+}
+SuperInteger::operator std::string() {
+	
 }
 bool check(char si[]) {
 	if (si[0] == '\0')
