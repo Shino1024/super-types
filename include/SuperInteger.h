@@ -4,6 +4,7 @@ struct Digit {
 	Digit(short);
 	Digit(int);
 	Digit& operator=(short);
+	operator int();
 };
 class SuperInteger {
 	private:
@@ -11,7 +12,6 @@ class SuperInteger {
 		int digits = 1;
 		static int c = 0;
 		bool n = false;
-		int& dig() {return digits;}
 	public:
 		bool& neg() {return n;}
 		operator char();

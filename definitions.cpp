@@ -18,6 +18,9 @@ Digit& Digit::operator=(short a) {
 	this->x = a;
 	return *this;
 }
+Digit::operator int() {
+	return x;
+}
 SuperInteger::operator char() {
 	if (*this > std::numeric_limits<char>::max() || *this < std::numeric_limits<char>::min())
 		return 0;
@@ -51,7 +54,12 @@ SuperInteger::operator unsigned long() {
 		return 0;
 }
 SuperInteger::operator std::string() {
-	
+	std::string ret;
+	if (!n)
+		ret += '-';
+	for (int i = digits; i >= 1; --i)
+		ret += static_cast<char>(integers.at(i).x);
+	return ret;
 }
 bool check(char si[]) {
 	if (si[0] == '\0')
