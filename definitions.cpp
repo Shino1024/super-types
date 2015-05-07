@@ -21,6 +21,15 @@ Digit& Digit::operator=(short a) {
 Digit::operator int() {
 	return x;
 }
+void SuperInteger::delbool(SuperInteger s) {
+	
+}
+SuperInteger::operator bool() {
+	for (std::deque<SuperInteger>::iterator i = boolset.begin(); i != boolset.end(); ++i)
+		if (*this == *i)
+			return false;
+	return true;
+}
 SuperInteger::operator char() {
 	if (*this > std::numeric_limits<char>::max() || *this < std::numeric_limits<char>::min())
 		return 0;
@@ -58,7 +67,7 @@ SuperInteger::operator std::string() {
 	if (!n)
 		ret += '-';
 	for (int i = digits; i >= 1; --i)
-		ret += static_cast<char>(integers.at(i).x);
+		ret += static_cast<char>(integers.at(i).x + 48);
 	return ret;
 }
 bool check(char si[]) {

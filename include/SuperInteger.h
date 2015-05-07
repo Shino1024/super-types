@@ -9,11 +9,13 @@ struct Digit {
 class SuperInteger {
 	private:
 		std::deque<Digit> integers;
+		std::deque<SuperInteger>(1) boolset;
 		int digits = 1;
 		static int c = 0;
 		bool n = false;
 	public:
 		bool& neg() {return n;}
+		operator bool();
 		operator char();
 		operator short();
 		operator int();
@@ -23,6 +25,8 @@ class SuperInteger {
 		operator unsigned int();
 		operator unsigned long();
 		operator std::string();
+		void setbool(SuperInteger s) {boolset.push_back(s);}
+		void delbool(SuperInteger);
 		int digc() {return digits;}
 		std::deque<Digit> returnDeque() const {return integers;}
 		void ins(Digit a) {integers.push_front(a);}
