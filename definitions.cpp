@@ -22,7 +22,9 @@ Digit::operator int() {
 	return x;
 }
 void SuperInteger::delbool(SuperInteger s) {
-	
+	for (std::deque<SuperInteger>::iterator i = boolset.begin(); i != boolset.end(); ++i)
+		if (s == *i)
+			boolset.erase(i);
 }
 SuperInteger::operator bool() {
 	for (std::deque<SuperInteger>::iterator i = boolset.begin(); i != boolset.end(); ++i)
@@ -118,7 +120,7 @@ SuperInteger::SuperInteger(long int si) {
 		push(static_cast<short>((static_cast<long double>(si) / 10 - si / 10) * 10));
 		si >> 1;
 		++digits;
-	} while (si != 0);
+	} while (!si);
 }
 SuperInteger::SuperInteger(long double sid) {
 	long int si = sid;
@@ -133,7 +135,7 @@ SuperInteger::SuperInteger(long double sid) {
 		push(static_cast<short>((static_cast<long double>(si) / 10 - si / 10) * 10));
 		si >> 1;
 		++digits;
-	} while (si != 0);
+	} while (!si);
 }
 SuperInteger::~SuperInteger() {
 	--c;

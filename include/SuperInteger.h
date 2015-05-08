@@ -26,7 +26,7 @@ class SuperInteger {
 		operator unsigned long();
 		operator std::string();
 		void setbool(SuperInteger s) {boolset.push_back(s);}
-		void delbool(SuperInteger);
+		friend void delbool(SuperInteger);
 		int digc() {return digits;}
 		std::deque<Digit> returnDeque() const {return integers;}
 		void ins(Digit a) {integers.push_front(a);}
