@@ -443,6 +443,9 @@ std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
 		out << si[i];
 	return out;
 }
-std::ostream& operator>>(std::ostream& out, SuperInteger const& si) {
-	
+std::istream& operator>>(std::istream& out, SuperInteger const& si) {
+	char* ch;
+	out >> ch;
+	SuperInteger ret(ch);
+	return ret;
 }
