@@ -17,6 +17,7 @@ class SuperInteger {
 		bool& neg() {return n;}
 		operator bool();
 		operator char();
+		operaotr char*();
 		operator short();
 		operator int();
 		operator long();

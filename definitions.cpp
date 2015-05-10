@@ -72,6 +72,15 @@ SuperInteger::operator std::string() {
 		ret += static_cast<char>(integers.at(i).x + 48);
 	return ret;
 }
+SuperInteger::operator char*() {
+	std::string ret;
+	if (!n)
+		ret += '-';
+	for (int i = digits; i >= 1; --i)
+		ret += static_cast<char>(integers.at(i).x + 48);
+	char* ret2 = ret.c_str();
+	return ret2;
+}
 bool check(char si[]) {
 	if (si[0] == '\0')
 		return false;
