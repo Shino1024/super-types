@@ -8,15 +8,29 @@ void swap(X& a, X& b) {
 	a = b;
 	b = c;
 }
-Digit::Digit(short a) {
-	x = a;
+Digit::Digit(long a) {
+	if (a < 0 || a > 9)
+		x = 0;
+	else
+		x = static_cast<short>(a);
 }
-Digit::Digit(int a) {
-	x = static_cast<short>(a);
+Digit::Digit(long double a) {
+	if (a < 0 || a > 9)
+		x = 0;
+	else
+		x = static_cast<short>(a);
 }
-Digit& Digit::operator=(short a) {
-	this->x = a;
-	return *this;
+Digit& Digit::operator=(long a) {
+	if (a < 0 || a > 9)
+		x = 0;
+	else
+		x = static_cast<short>(a);
+}
+Digit& Digit::operator=(long double a) {
+	if (a < 0 || a > 9)
+		x = 0;
+	else
+		x = static_cast<short>(a);
 }
 Digit::operator int() {
 	return x;
