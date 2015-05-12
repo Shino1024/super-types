@@ -1,4 +1,9 @@
-#pragma once
+#ifndef SUPERINTEGER_H
+#define SUPERINTEGER_H
+#include <string>
+#include <limits>
+#include <iostream>
+
 struct Digit {
 	unsigned short x: 4;
 	Digit(short);
@@ -77,3 +82,4 @@ class SuperInteger {
 		friend std::ostream& operator<<(std::ostream&, SuperInteger const&);
 		friend std::istream& operator>>(std::istream&, SuperInteger const&);
 };
+#endif
