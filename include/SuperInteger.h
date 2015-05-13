@@ -31,7 +31,7 @@ class SuperInteger {
 		operator unsigned int();
 		operator unsigned long();
 		operator std::string();
-		void setbool(SuperInteger s) {boolset.push_back(s);}
+		friend void setbool(SuperInteger s) {boolset.push_back(s);}
 		friend void delbool(SuperInteger);
 		int digc() {return digits;}
 		std::deque<Digit> returnDeque() const {return integers;}
@@ -42,7 +42,6 @@ class SuperInteger {
 		int count() const {return c;}
 		int& operator[](int a) {return integers.at(a - 1).x;}
 		int operator~() {return this->digits;}
-		SuperInteger operator()(SuperInteger& a) {return (*this) * a;}
 		SuperInteger(std::string&, int);
 		SuperInteger(char[]);
 		SuperInteger(long int);
