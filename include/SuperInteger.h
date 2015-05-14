@@ -46,7 +46,6 @@ class SuperInteger {
 		SuperInteger(char[]);
 		SuperInteger(long int);
 		SuperInteger(std::string&);
-		void introduce(SuperInteger&) const;
 		SuperInteger& operator=(SuperInteger const&);
 		friend SuperInteger operator+(SuperInteger const&, SuperInteger const&);
 		SuperInteger& operator+=(SuperInteger const&);

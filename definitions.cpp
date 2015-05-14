@@ -181,12 +181,6 @@ SuperInteger::SuperInteger(std::string& a) {
 			ins(static_cast<short>(si[iter] - 48));
 	}
 }
-void SuperInteger::introduce(SuperInteger& si) const {
-	if (si.neg())
-		std::cout << '-';
-	for (int i = 1; i <= digits; i++)
-		std::cout << si[i];
-}
 SuperInteger operator-(SuperInteger& a) {
 	SuperInteger ret;
 	ret = a;
@@ -205,6 +199,8 @@ SuperInteger operator^(SuperInteger const& a, SuperInteger const& b) {
 	return ret;
 }
 SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
+	if (a * b < 0)
+		return a - b;
 	if (a.digc() + 1 > max_size || b.digc() + 1 > max_size)
 		return a;
 	SuperInteger ret;
@@ -255,6 +251,7 @@ SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 		else
 }
 SuperInteger operator-(SuperInteger const& a, SuperInteger const& b) {
+	
 	SuperInteger ret;
 }
 SuperInteger operator*(SuperInteger const& a, SuperInteger const& b) {
