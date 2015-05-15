@@ -9,6 +9,10 @@ struct Digit {
 	Digit(short);
 	Digit(int);
 	Digit& operator=(short);
+	friend Digit operator+(Digit const&, Digit const&);
+	friend Digit operator-(Digit const&, Digit const&);
+	Digit& operator+=(Digit const&);
+	Digit& operator-=(Digit const&);
 	operator int();
 };
 class SuperInteger {
