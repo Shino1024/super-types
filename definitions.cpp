@@ -35,6 +35,13 @@ Digit& Digit::operator=(long double a) {
 Digit::operator int() {
 	return x;
 }
+Digit operator+(Digit const& a, Digit const& b) {
+	Digit ret = a.x + b.x;
+	return ret;
+}
+Digit& Digit::operator+=(Digit const& a) {
+	return *this = (*this) + a;
+}
 void SuperInteger::delbool(SuperInteger s) {
 	for (std::deque<SuperInteger>::iterator i = boolset.begin(); i != boolset.end(); ++i)
 		if (s == *i)
