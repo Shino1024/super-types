@@ -34,6 +34,7 @@ class SuperInteger {
 		operator unsigned short();
 		operator unsigned int();
 		operator unsigned long();
+		operator char*();
 		operator std::string();
 		friend void setbool(SuperInteger s) {boolset.push_back(s);}
 		friend void delbool(SuperInteger);

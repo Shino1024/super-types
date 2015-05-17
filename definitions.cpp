@@ -85,6 +85,9 @@ SuperInteger::operator unsigned long() {
 	if (*this > std::numeric_limits<unsigned long>::max() || *this < std::numeric_limits<unsigned long>::min())
 		return 0;
 }
+SuperInteger::operator char*() {
+	
+}
 SuperInteger::operator std::string() {
 	std::string ret;
 	if (!n)
