@@ -18,4 +18,9 @@ represents a single digit, using 4 bits in order to save as much memory as possi
 - front minus operator (-),
 - negation operator (!),
 - ostream (<<) and istream (>>) operators,
+- right bit shift operator (>>),
+- left bit shift operator (<<),
+- array subscript operator ([]).
+<br>
+There are also constructors for various types, as well as it's possible to cast the SuperInteger type to many others.
 </font>
