@@ -56,37 +56,59 @@ SuperInteger::operator bool() {
 SuperInteger::operator char() {
 	if (*this > std::numeric_limits<char>::max() || *this < std::numeric_limits<char>::min())
 		return 0;
+	else {
+	}
 }
 SuperInteger::operator short() {
 	if (*this > std::numeric_limits<short>::max() || *this < std::numeric_limits<short>::min())
 		return 0;
+	else {
+	}
 }
 SuperInteger::operator int() {
 	if (*this > std::numeric_limits<int>::max() || *this < std::numeric_limits<int>::min())
 		return 0;
+	else {
+	}
 }
 SuperInteger::operator long() {
 	if (*this > std::numeric_limits<long>::max() || *this < std::numeric_limits<long>::min())
 		return 0;
+	else {
+	}
 }
 SuperInteger::operator unsigned char() {
 	if (*this > std::numeric_limits<unsigned char>::max() || *this < std::numeric_limits<unsigned char>::min())
 		return 0;
+	else {
+	}
 }
 SuperInteger::operator unsigned short() {
 	if (*this > std::numeric_limits<unsigned short>::max() || *this < std::numeric_limits<unsigned short>::min())
 		return 0;
+	else {
+	}
 }
 SuperInteger::operator unsigned int() {
 	if (*this > std::numeric_limits<unsigned int>::max() || *this < std::numeric_limits<unsigned int>::min())
 		return 0;
+	else {
+	}
 }
 SuperInteger::operator unsigned long() {
 	if (*this > std::numeric_limits<unsigned long>::max() || *this < std::numeric_limits<unsigned long>::min())
 		return 0;
+	else {
+	}
 }
 SuperInteger::operator char*() {
-	
+	std::string ret;
+	if (!n)
+		ret += '-';
+	for (int i = digits; i >= 1; --i)
+		ret += static_cast<char>(integers.at(i).x + 48);
+	char* ret2 = ret.c_str()
+	return ret2;
 }
 SuperInteger::operator std::string() {
 	std::string ret;
