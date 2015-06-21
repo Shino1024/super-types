@@ -57,48 +57,112 @@ SuperInteger::operator char() {
 	if (*this > std::numeric_limits<char>::max() || *this < std::numeric_limits<char>::min())
 		return 0;
 	else {
+		char ret = 0, temp;
+		for (std::deque<Digit>::iterator it = integers.begin(), short contr = 0; it != integers.end(); ++it, ++contr) {
+			temp = (*it).x;
+			for (short it2 = 0; it2 < contr; ++it2)
+				temp *= 10;
+			ret += temp;
+		}
+		return ret;
 	}
 }
 SuperInteger::operator short() {
 	if (*this > std::numeric_limits<short>::max() || *this < std::numeric_limits<short>::min())
 		return 0;
 	else {
+		short ret = 0, temp;
+		for (std::deque<Digit>::iterator it = integers.begin(), short contr = 0; it != integers.end(); ++it, ++contr) {
+			temp = (*it).x;
+			for (short it2 = 0; it2 < contr; ++it2)
+				temp *= 10;
+			ret += temp;
+		}
+		return ret;
 	}
 }
 SuperInteger::operator int() {
 	if (*this > std::numeric_limits<int>::max() || *this < std::numeric_limits<int>::min())
 		return 0;
 	else {
+		int ret = 0, temp;
+		for (std::deque<Digit>::iterator it = integers.begin(), short contr = 0; it != integers.end(); ++it, ++contr) {
+			temp = (*it).x;
+			for (short it2 = 0; it2 < contr; ++it2)
+				temp *= 10;
+			ret += temp;
+		}
+		return ret;
 	}
 }
 SuperInteger::operator long() {
 	if (*this > std::numeric_limits<long>::max() || *this < std::numeric_limits<long>::min())
 		return 0;
 	else {
+		long ret = 0, temp;
+		for (std::deque<Digit>::iterator it = integers.begin(), short contr = 0; it != integers.end(); ++it, ++contr) {
+			temp = (*it).x;
+			for (short it2 = 0; it2 < contr; ++it2)
+				temp *= 10;
+			ret += temp;
+		}
+		return ret;
 	}
 }
 SuperInteger::operator unsigned char() {
 	if (*this > std::numeric_limits<unsigned char>::max() || *this < std::numeric_limits<unsigned char>::min())
 		return 0;
 	else {
+		unsigned char ret = 0, temp;
+		for (std::deque<Digit>::iterator it = integers.begin(), short contr = 0; it != integers.end(); ++it, ++contr) {
+			temp = (*it).x;
+			for (short it2 = 0; it2 < contr; ++it2)
+				temp *= 10;
+			ret += temp;
+		}
+		return ret;
 	}
 }
 SuperInteger::operator unsigned short() {
 	if (*this > std::numeric_limits<unsigned short>::max() || *this < std::numeric_limits<unsigned short>::min())
 		return 0;
 	else {
+		unsigned short ret = 0, temp;
+		for (std::deque<Digit>::iterator it = integers.begin(), short contr = 0; it != integers.end(); ++it, ++contr) {
+			temp = (*it).x;
+			for (short it2 = 0; it2 < contr; ++it2)
+				temp *= 10;
+			ret += temp;
+		}
+		return ret;
 	}
 }
 SuperInteger::operator unsigned int() {
 	if (*this > std::numeric_limits<unsigned int>::max() || *this < std::numeric_limits<unsigned int>::min())
 		return 0;
 	else {
+		unsigned int ret = 0, temp;
+		for (std::deque<Digit>::iterator it = integers.begin(), short contr = 0; it != integers.end(); ++it, ++contr) {
+			temp = (*it).x;
+			for (short it2 = 0; it2 < contr; ++it2)
+				temp *= 10;
+			ret += temp;
+		}
+		return ret;
 	}
 }
 SuperInteger::operator unsigned long() {
 	if (*this > std::numeric_limits<unsigned long>::max() || *this < std::numeric_limits<unsigned long>::min())
 		return 0;
 	else {
+		unsigned long ret = 0, temp;
+		for (std::deque<Digit>::iterator it = integers.begin(), short contr = 0; it != integers.end(); ++it, ++contr) {
+			temp = (*it).x;
+			for (short it2 = 0; it2 < contr; ++it2)
+				temp *= 10;
+			ret += temp;
+		}
+		return ret;
 	}
 }
 SuperInteger::operator char*() {
@@ -117,15 +181,6 @@ SuperInteger::operator std::string() {
 	for (int i = digits; i >= 1; --i)
 		ret += static_cast<char>(integers.at(i).x + 48);
 	return ret;
-}
-SuperInteger::operator char*() {
-	std::string ret;
-	if (!n)
-		ret += '-';
-	for (int i = digits; i >= 1; --i)
-		ret += static_cast<char>(integers.at(i).x + 48);
-	char* ret2 = ret.c_str();
-	return ret2;
 }
 bool check(char si[]) {
 	if (si[0] == '\0')
@@ -173,7 +228,7 @@ SuperInteger::SuperInteger(long int si) {
 		n = false;
 	do {
 		push(static_cast<short>((static_cast<long double>(si) / 10 - si / 10) * 10));
-		si >> 1;
+		si /= 10;
 		++digits;
 	} while (!si);
 }
@@ -188,7 +243,7 @@ SuperInteger::SuperInteger(long double sid) {
 		n = false;
 	do {
 		push(static_cast<short>((static_cast<long double>(si) / 10 - si / 10) * 10));
-		si >> 1;
+		si /= 10;
 		++digits;
 	} while (!si);
 }

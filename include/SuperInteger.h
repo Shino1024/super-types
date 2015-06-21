@@ -1,5 +1,6 @@
 #ifndef SUPERINTEGER_H
 #define SUPERINTEGER_H
+
 #include <string>
 #include <limits>
 #include <iostream>
@@ -26,7 +27,7 @@ class SuperInteger {
 		bool& neg() {return n;}
 		operator bool();
 		operator char();
-		operaotr char*();
+		operator char*();
 		operator short();
 		operator int();
 		operator long();
