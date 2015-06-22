@@ -1,58 +1,72 @@
 #include "include/SuperInteger.h"
 
+// The maximal size of a SuperInteger in digits.
 const int max_size = 4096;
 
-template <typename X>
-void swap(X& a, X& b) {
-	X c = a;
-	a = b;
-	b = c;
-}
+// The constructor of the Digit class (long).
 Digit::Digit(long a) {
 	if (a < 0 || a > 9)
 		x = 0;
 	else
 		x = static_cast<short>(a);
 }
+
+// The constructor of the Digit class (long double).
 Digit::Digit(long double a) {
 	if (a < 0 || a > 9)
 		x = 0;
 	else
 		x = static_cast<short>(a);
 }
+
+// The assignment operator overload (long).
 Digit& Digit::operator=(long a) {
 	if (a < 0 || a > 9)
 		x = 0;
 	else
 		x = static_cast<short>(a);
 }
+
+// The assignment operator overload (long double).
 Digit& Digit::operator=(long double a) {
 	if (a < 0 || a > 9)
 		x = 0;
 	else
 		x = static_cast<short>(a);
 }
+
+// Digit to int conversion.
 Digit::operator int() {
 	return x;
 }
+
+// Addition operator overload.
 Digit operator+(Digit const& a, Digit const& b) {
 	Digit ret = a.x + b.x;
 	return ret;
 }
+
+// Assignment-addition operator overload.
 Digit& Digit::operator+=(Digit const& a) {
 	return *this = (*this) + a;
 }
+
+// The function that deletes the "false" SuperInteger for the deque.
 void SuperInteger::delbool(SuperInteger s) {
 	for (std::deque<SuperInteger>::iterator i = boolset.begin(); i != boolset.end(); ++i)
 		if (s == *i)
 			boolset.erase(i);
 }
+
+// SuperInteger to bool conversion.
 SuperInteger::operator bool() {
 	for (std::deque<SuperInteger>::iterator i = boolset.begin(); i != boolset.end(); ++i)
 		if (*this == *i)
 			return false;
 	return true;
 }
+
+// SuperInteger to char conversion.
 SuperInteger::operator char() {
 	if (*this > std::numeric_limits<char>::max() || *this < std::numeric_limits<char>::min())
 		return 0;
@@ -67,6 +81,8 @@ SuperInteger::operator char() {
 		return ret;
 	}
 }
+
+// SuperInteger to short conversion.
 SuperInteger::operator short() {
 	if (*this > std::numeric_limits<short>::max() || *this < std::numeric_limits<short>::min())
 		return 0;
@@ -81,6 +97,8 @@ SuperInteger::operator short() {
 		return ret;
 	}
 }
+
+// SuperInteger to int conversion.
 SuperInteger::operator int() {
 	if (*this > std::numeric_limits<int>::max() || *this < std::numeric_limits<int>::min())
 		return 0;
@@ -95,6 +113,8 @@ SuperInteger::operator int() {
 		return ret;
 	}
 }
+
+// SuperInteger to long conversion.
 SuperInteger::operator long() {
 	if (*this > std::numeric_limits<long>::max() || *this < std::numeric_limits<long>::min())
 		return 0;
@@ -109,6 +129,8 @@ SuperInteger::operator long() {
 		return ret;
 	}
 }
+
+// SuperInteger to unsigned char conversion.
 SuperInteger::operator unsigned char() {
 	if (*this > std::numeric_limits<unsigned char>::max() || *this < std::numeric_limits<unsigned char>::min())
 		return 0;
@@ -123,6 +145,8 @@ SuperInteger::operator unsigned char() {
 		return ret;
 	}
 }
+
+// SuperInteger to unsigned short conversion.
 SuperInteger::operator unsigned short() {
 	if (*this > std::numeric_limits<unsigned short>::max() || *this < std::numeric_limits<unsigned short>::min())
 		return 0;
@@ -137,6 +161,8 @@ SuperInteger::operator unsigned short() {
 		return ret;
 	}
 }
+
+// SuperInteger to unsigned int conversion.
 SuperInteger::operator unsigned int() {
 	if (*this > std::numeric_limits<unsigned int>::max() || *this < std::numeric_limits<unsigned int>::min())
 		return 0;
@@ -151,6 +177,8 @@ SuperInteger::operator unsigned int() {
 		return ret;
 	}
 }
+
+// SuperInteger to unsigned long conversion.
 SuperInteger::operator unsigned long() {
 	if (*this > std::numeric_limits<unsigned long>::max() || *this < std::numeric_limits<unsigned long>::min())
 		return 0;
@@ -165,6 +193,8 @@ SuperInteger::operator unsigned long() {
 		return ret;
 	}
 }
+
+// SuperInteger to char* conversion.
 SuperInteger::operator char*() {
 	std::string ret;
 	if (!n)
@@ -174,6 +204,8 @@ SuperInteger::operator char*() {
 	char* ret2 = ret.c_str()
 	return ret2;
 }
+
+// SuperInteger to std::string conversion.
 SuperInteger::operator std::string() {
 	std::string ret;
 	if (!n)
@@ -182,6 +214,8 @@ SuperInteger::operator std::string() {
 		ret += static_cast<char>(integers.at(i).x + 48);
 	return ret;
 }
+
+// Checking the construction of the char array for a normal SuperInteger (decimal).
 bool check(char si[]) {
 	if (si[0] == '\0')
 		return false;
@@ -193,14 +227,20 @@ bool check(char si[]) {
 				return false;
 	return true;
 }
+
+// The empty SuperInteger initializer.
 SuperInteger::SuperInteger() {
 	++c;
 	push(0);
 }
-SuperInteger::SuperInteger(std::string si, int a) {
+
+// The SuperInteger initializer that takes the string as the number and the short variable that indicates its numeric system.
+SuperInteger::SuperInteger(std::string si, short a) {
 	if (a > 37 || a < 1)
 		push(0);
 }
+
+// The char pointer initializer.
 SuperInteger::SuperInteger(char si[]) {
 	if (!(check(si))
 		push(0);
@@ -218,6 +258,8 @@ SuperInteger::SuperInteger(char si[]) {
 			ins(static_cast<short>(si[iter] - 48));
 	}
 }
+
+// The long initializer.
 SuperInteger::SuperInteger(long int si) {
 	++c;
 	if (si < 0) {
@@ -232,6 +274,8 @@ SuperInteger::SuperInteger(long int si) {
 		++digits;
 	} while (!si);
 }
+
+// The long double initializer.
 SuperInteger::SuperInteger(long double sid) {
 	long int si = sid;
 	++c;
@@ -247,9 +291,8 @@ SuperInteger::SuperInteger(long double sid) {
 		++digits;
 	} while (!si);
 }
-SuperInteger::~SuperInteger() {
-	--c;
-}
+
+// The string initializer.
 SuperInteger::SuperInteger(std::string& a) {
 	char* si = a.c_str();
 	if (!(check(si))
@@ -268,12 +311,21 @@ SuperInteger::SuperInteger(std::string& a) {
 			ins(static_cast<short>(si[iter] - 48));
 	}
 }
+
+// The destructor.
+SuperInteger::~SuperInteger() {
+	--c;
+}
+
+// Minus operator.
 SuperInteger operator-(SuperInteger& a) {
 	SuperInteger ret;
 	ret = a;
 	ret.neg() = !(a.neg());
 	return ret;
 }
+
+// XOR operator that will be used to power the SuperInteger.
 SuperInteger operator^(SuperInteger const& a, SuperInteger const& b) {
 	if (b < 0 || b > 256)
 		return a;
@@ -285,6 +337,8 @@ SuperInteger operator^(SuperInteger const& a, SuperInteger const& b) {
 	}
 	return ret;
 }
+
+// Addition operator.
 SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 	if (a * b < 0)
 		return a - b;
@@ -337,19 +391,29 @@ SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 		}
 		else
 }
+
+// Substraction operator.
 SuperInteger operator-(SuperInteger const& a, SuperInteger const& b) {
 	
 	SuperInteger ret;
 }
+
+// Multiplication operator.
 SuperInteger operator*(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
 }
+
+// Integer division operator.
 SuperInteger operator/(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
 }
+
+// Modulo operator.
 SuperInteger operator%(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
 }
+
+// Assignment operator.
 SuperInteger& SuperInteger::operator=(SuperInteger const& b) {
 	if (this == &b)
 		return *this;
@@ -357,21 +421,8 @@ SuperInteger& SuperInteger::operator=(SuperInteger const& b) {
 	n = b.neg();
 	digits = b.digc();
 }
-SuperInteger& SuperInteger::operator+=(SuperInteger const& b) {
-	return *this = (*this) + b;
-}
-SuperInteger& SuperInteger::operator-=(SuperInteger const& b) {
-	return *this = (*this) - b;
-}
-SuperInteger& SuperInteger::operator*=(SuperInteger const& b) {
-	return *this = (*this) * b;
-}
-SuperInteger& SuperInteger::operator/=(SuperInteger const& b) {
-	return *this = (*this) / b;
-}
-SuperInteger& SuperInteger::operator%=(SuperInteger const& b) {
-	return *this = (*this) % b;
-}
+
+// Left bit shift operator. It simply multiplies by 10.
 SuperInteger operator<<(SuperInteger const& a, SuperInteger const& b) {
 	if (b < 0)
 		return a >> -b;
@@ -388,6 +439,8 @@ SuperInteger operator<<(SuperInteger const& a, SuperInteger const& b) {
 		return ret;
 	}
 }
+
+// Right bit shift operator. It simply divides by 10.
 SuperInteger operator>>(SuperInteger const& a, SuperInteger const& b) {
 	if (b < 0)
 		return a << -b;
@@ -402,15 +455,69 @@ SuperInteger operator>>(SuperInteger const& a, SuperInteger const& b) {
 		return ret;
 	}
 }
+
+// The AND operator for concatenation.
+SuperInteger operator&(SuperInteger const& a, SuperInteger const& b) {
+	if (a.digc() + b.digc() > max_size)
+		return a;
+	SuperInteger ret;
+	for (short i = 1; i <= a.digc(); ++i)
+		ret.push(a[i]);
+	for (short i = 1; i <= b.digc(); ++i)
+		ret.push(b[i]);
+	if (a.neg() && b.neg() || !(a.neg() && b.neg())
+		ret.neg() = false;
+	else
+		ret.neg() = true;
+	return ret;
+}
+
+// Addition-assignment operator.
+SuperInteger& SuperInteger::operator+=(SuperInteger const& b) {
+	return *this = (*this) + b;
+}
+
+// Substraction-assignment operator.
+SuperInteger& SuperInteger::operator-=(SuperInteger const& b) {
+	return *this = (*this) - b;
+}
+
+// Multiplication-assignment operator.
+SuperInteger& SuperInteger::operator*=(SuperInteger const& b) {
+	return *this = (*this) * b;
+}
+
+// Division-assignment operator.
+SuperInteger& SuperInteger::operator/=(SuperInteger const& b) {
+	return *this = (*this) / b;
+}
+
+// Modulo-assignment operator.
+SuperInteger& SuperInteger::operator%=(SuperInteger const& b) {
+	return *this = (*this) % b;
+}
+
+// Left-bit-shift-assignment operator.
 SuperInteger& SuperInteger::operator<<=(SuperInteger const& b) {
 	return *this = (*this) << b;
 }
+
+// Right-bit-shift-assignment operator.
 SuperInteger& SuperInteger::operator>>=(SuperInteger const& b) {
 	return *this = (*this) >> b;
 }
+
+// XOR-assignment operator.
 SuperInteger& SuperInteger::operator^=(SuperInteger const& b) {
 	return *this = (*this) ^ b;
 }
+
+// The AND-assignment operator.
+SuperInteger& SuperInteger::operator&=(SuperInteger const& b) {
+	return *this = (*this) & b;
+}
+
+// The less-than operator.
 bool operator<(SuperInteger const& a, SuperInteger const& b) {
 	if (a.neg() && !(b.neg())
 		return true;
@@ -434,6 +541,8 @@ bool operator<(SuperInteger const& a, SuperInteger const& b) {
 				continue;
 	return false;
 }
+
+// The greater-than operator.
 bool operator>(SuperInteger const& a, SuperInteger const& b) {
 	if (a.neg() && !(b.neg())
 		return false;
@@ -457,16 +566,22 @@ bool operator>(SuperInteger const& a, SuperInteger const& b) {
 				continue;
 	return false;
 }
+
+// The less-than-or-equal operator.
 bool operator<=(SuperInteger const& a, SuperInteger const& b) {
 	if (a == b || a < b)
 		return true;
 	return false;
 }
+
+// The greater-than-or-equal operator.
 bool operator>=(SuperInteger const& a, SuperInteger const& b) {
 	if (a == b || a > b)
 		return true;
 	return false;
 }
+
+// The equality operator.
 bool operator==(SuperInteger const& a, SuperInteger const& b) {
 	if (a.digc() != b.digc() || a.neg() != b.neg())
 		return false;
@@ -476,6 +591,8 @@ bool operator==(SuperInteger const& a, SuperInteger const& b) {
 				return false;
 	return true;
 }
+
+// The difference operator.
 bool operator!=(SuperInteger const& a, SuperInteger const& b) {
 	if (a.digc() != b.digc() || a.neg() != b.neg())
 		return true;
@@ -485,23 +602,8 @@ bool operator!=(SuperInteger const& a, SuperInteger const& b) {
 				return false;
 	return true;
 }
-SuperInteger operator&(SuperInteger const& a, SuperInteger const& b) {
-	if (a.digc() + b.digc() > max_size)
-		return a;
-	SuperInteger ret;
-	for (short i = 1; i <= a.digc(); ++i)
-		ret.push(a[i]);
-	for (short i = 1; i <= b.digc(); ++i)
-		ret.push(b[i]);
-	if (a.neg() && b.neg() || !(a.neg() && b.neg())
-		ret.neg() = false;
-	else
-		ret.neg() = true;
-	return ret;
-}
-SuperInteger& SuperInteger::operator&=(SuperInteger const& b) {
-	return *this = (*this) & b;
-}
+
+// The preincrementation operator.
 SuperInteger& SuperInteger::operator++() {
 	*this += 1;
 	if ((*this).digc() > max_size)
@@ -511,6 +613,8 @@ SuperInteger& SuperInteger::operator++() {
 		return *this;
 	}
 }
+
+// The postincrementation operator.
 SuperInteger& SuperInteger::operator++(int) {
 	*this += 1;
 	if ((*this).digc() > max_size)
@@ -520,6 +624,8 @@ SuperInteger& SuperInteger::operator++(int) {
 		return *this;
 	}
 }
+
+// The predecrementation operator.
 SuperInteger& SuperInteger::operator--() {
 	*this -= 1;
 	if ((*this).digc() > max_size)
@@ -529,6 +635,8 @@ SuperInteger& SuperInteger::operator--() {
 		return *this;
 	}
 }
+
+// The postdecrementation operator.
 SuperInteger& SuperInteger::operator--(int) {
 	*this -= 1;
 	if ((*this).digc() > max_size)
@@ -538,11 +646,15 @@ SuperInteger& SuperInteger::operator--(int) {
 		return *this;
 	}
 }
+
+// The bool negation operator.
 bool operator!(SuperInteger const& a) {
 	if (a == 0)
 		return true;
 	return false;
 }
+
+// The std::ostream operator overload for printing out the SuperIntegers.
 std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
 	if (si.neg())
 		out << '-';
@@ -550,6 +662,8 @@ std::ostream& operator<<(std::ostream& out, SuperInteger const& si) {
 		out << si[i];
 	return out;
 }
+
+// The std::istream operator overload for reading to the SuperIntegers.
 std::istream& operator>>(std::istream& out, SuperInteger const& si) {
 	char* ch;
 	out >> ch;
