@@ -317,8 +317,17 @@ SuperInteger::~SuperInteger() {
 	--c;
 }
 
+// Assignment operator.
+SuperInteger& SuperInteger::operator=(SuperInteger const& b) {
+	if (this == &b)
+		return *this;
+	integers = b.returnDeque;
+	n = b.neg();
+	digits = b.digc();
+}
+
 // Minus operator.
-SuperInteger operator-(SuperInteger& a) {
+SuperInteger operator-(SuperInteger const& a) {
 	SuperInteger ret;
 	ret = a;
 	ret.neg() = !(a.neg());
@@ -411,15 +420,6 @@ SuperInteger operator/(SuperInteger const& a, SuperInteger const& b) {
 // Modulo operator.
 SuperInteger operator%(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
-}
-
-// Assignment operator.
-SuperInteger& SuperInteger::operator=(SuperInteger const& b) {
-	if (this == &b)
-		return *this;
-	integers = b.returnDeque;
-	n = b.neg();
-	digits = b.digc();
 }
 
 // Left bit shift operator. It simply multiplies by 10.
