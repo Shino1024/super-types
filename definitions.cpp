@@ -349,56 +349,42 @@ SuperInteger operator^(SuperInteger const& a, SuperInteger const& b) {
 
 // Addition operator.
 SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
-	if (a * b < 0)
+	if (a.neg() != b.neg())
 		return a - b;
 	if (a.digc() + 1 > max_size || b.digc() + 1 > max_size)
 		return a;
 	SuperInteger ret;
-	Digit helper;
-	short add = 0;
-	if (!(a.neg()) && !(b.neg()))
-		if (a >= b) {
-			for (short n = 1; n <= b.digc(); ++n) {
-				helper = a[n] + b[n] + add;
-				ret.push(helper);
-				add = 0;
-				if (ret[n] > 9) {
-					add = 1;
-					ret[n] -= 10;
-				}
+	bool over = false;
+	short helper, longer = a.digc() > b.digc() ? a.digc() : b.digc(), shorter = a.digc() < b.digc() ? a.digc() : b.digc();
+	if (a > b)
+		for (short num = 1; longer >= nums; ++num) {
+			helper = a[num] + (shorter >= nums ? b[num] : 0) + (over ? 1 : 0);
+			if (helper > 9) {
+				over = true;
+				helper -= 10;
 			}
-			ret.digc();
-			if (a[a.digc()] + add > 9) {
-				helper.x = 1 + a[a.digc()] - 10;
-				ret.push(helper);
-				helper.x = 1;
-				ret.push(helper);
-				++(ret.digc());
-			}
-			return ret;
+			else
+				over = false;
+			ret.push(helper);
+			helper = 0;
 		}
-		else if (a.neg() && b.neg()) {
-			for (short n = 1; n <= a.digc(); ++n) {
-				helper.x = a[n] + b[n] + add;
-				ret.push(helper);
-				add = 0;
-				if (ret[n] > 9) {
-					add = 1;
-					ret[n] -= 10;
-				}
+	else
+		for (short num = 1; longer >= nums; ++num) {
+			helper = b[num] + (shorter >= nums ? a[num] : 0) + (over ? 1 : 0);
+			if (helper > 9) {
+				over = true;
+				helper -= 10;
 			}
-			ret.digc() = b.digc();
-			if (b[b.digc()] + add > 9) {
-				helper.x = 1 + b[b.digc()] - 10;
-				ret.push(helper);
-				helper.x = 1;
-				ret.push(helper);
-				++(ret.digc());
-			}
-			ret.neg() = true;
-			return ret;
+			else
+				over = false;
+			ret.push(helper);
+			helper = 0;
 		}
-		else
+	if (over)
+		ret.push(1)
+	if (a.neg())
+		ret.neg() = true;
+	return neg;
 }
 
 // Substraction operator.
