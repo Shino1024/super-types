@@ -405,7 +405,23 @@ SuperInteger operator/(SuperInteger const& a, SuperInteger const& b) {
 
 // Modulo operator.
 SuperInteger operator%(SuperInteger const& a, SuperInteger const& b) {
-	SuperInteger ret;
+	if (!(a.neg()) && (!(b.neg()) || b.neg())) {
+		if (b.neg())
+			b.neg() = false;
+		if (a < b)
+			return a;
+		else
+			return a - (a / b) * b;
+	}
+	else {
+		if (b.neg())
+			b.neg() = false;
+		a.neg() = false;
+		if (a < b)
+			return a;
+		else
+			return b - (a - (a / b) * b);
+	}
 }
 
 // Left bit shift operator. It simply multiplies by 10.
