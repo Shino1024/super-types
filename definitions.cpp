@@ -610,7 +610,7 @@ SuperInteger& SuperInteger::operator++() {
 	*this += 1;
 	if ((*this).digc() > max_size)
 		return (*this) -= 1;
-	else if (!(*this)) {
+	else if (*this == 0) {
 		(*this).neg() = false;
 		return *this;
 	}
@@ -621,7 +621,7 @@ SuperInteger& SuperInteger::operator++(int) {
 	*this += 1;
 	if ((*this).digc() > max_size)
 		return (*this) -= 1;
-	else if (!(*this)) {
+	else if (*this == 0) {
 		(*this).neg() = false;
 		return *this;
 	}
@@ -631,7 +631,7 @@ SuperInteger& SuperInteger::operator++(int) {
 SuperInteger& SuperInteger::operator--() {
 	*this -= 1;
 	if ((*this).digc() > max_size)
-		return (*this) -= 1;
+		return (*this) += 1;
 	else if (*this == -1) {
 		(*this).neg() = true;
 		return *this;
@@ -642,7 +642,7 @@ SuperInteger& SuperInteger::operator--() {
 SuperInteger& SuperInteger::operator--(int) {
 	*this -= 1;
 	if ((*this).digc() > max_size)
-		return (*this) -= 1;
+		return (*this) += 1;
 	else if (*this == -1) {
 		(*this).neg() = true;
 		return *this;
