@@ -34,7 +34,7 @@ There are also constructors for various types, as well as it's possible to cast 
 1. It is capable of accepting certain SuperIntegers for which the given object will return false. Thanks to it, one can define any number of other "false" SuperIntegers. Every new object is served with the default 0 value.
 2. It's possible to read to the SuperInteger from the standard input, as well as print its value, thanks to the overloaded std::istream and std::ostream operators.
 3. It offers a wide range of operations for the user's convenience. It's possible to operate on SuperIntegers in many ways.
-4. It takes advantage of 4-bit Digit values, of which every SuperInteger consists. It's designed to take as little memory as possible.
+4. It takes advantage of 4-bit Digit values. Every SuperInteger consists of it. It's designed to take as little memory as possible.
 5. Fast and efficient algorithms for any operations.
 6. Possibility to load up a SuperInteger in other numerical systems than decimal.
 </font>
