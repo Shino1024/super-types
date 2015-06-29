@@ -27,7 +27,7 @@ There are also constructors for various types, as well as it's possible to cast 
 - short (and unsigned short),
 - int (and unsigned int),
 - long (and unsigned long),
-- char*,
+- char *,
 - std::string.
 <br>
 # Features of the SuperInteger type:
