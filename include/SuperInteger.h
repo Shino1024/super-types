@@ -55,6 +55,7 @@ class SuperInteger {
 		int count() const {return c;} // The number of the SuperIntegers.
 		int& operator[](int a) {return integers.at(a - 1).x;} // The subscription operator that returns the ath Digit in the SuperInteger.
 		int operator~() {return this->digits;} // The complementary operator that returns the number of digits in the SuperInteger.
+		std::deque<Digit> operator+() {return this->integers;} // The unary-plus operator for returning the deque with the digits.
 
 		// Constructors:
 		SuperInteger(std::string&, short);
