@@ -317,7 +317,7 @@ SuperInteger::~SuperInteger() {
 	--c;
 }
 
-// Assignment operator.
+// The assignment operator.
 SuperInteger& SuperInteger::operator=(SuperInteger const& b) {
 	if (this == &b)
 		return *this;
@@ -326,7 +326,7 @@ SuperInteger& SuperInteger::operator=(SuperInteger const& b) {
 	digits = b.digc();
 }
 
-// Minus operator.
+// The minus operator.
 SuperInteger operator-(SuperInteger const& a) {
 	SuperInteger ret;
 	ret = a;
@@ -334,7 +334,7 @@ SuperInteger operator-(SuperInteger const& a) {
 	return ret;
 }
 
-// XOR operator that will be used to power the SuperInteger.
+// The XOR operator that will be used to power the SuperInteger.
 SuperInteger operator^(SuperInteger const& a, SuperInteger const& b) {
 	if (b < 0 || b > 256)
 		return a;
@@ -347,7 +347,7 @@ SuperInteger operator^(SuperInteger const& a, SuperInteger const& b) {
 	return ret;
 }
 
-// Addition operator.
+// The addition operator.
 SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 	if (a.neg() != b.neg())
 		return a - b;
@@ -387,23 +387,23 @@ SuperInteger operator+(SuperInteger const& a, SuperInteger const& b) {
 	return neg;
 }
 
-// Substraction operator.
+// The substraction operator.
 SuperInteger operator-(SuperInteger const& a, SuperInteger const& b) {
 	
 	SuperInteger ret;
 }
 
-// Multiplication operator.
+// The multiplication operator.
 SuperInteger operator*(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
 }
 
-// Integer division operator.
+// The integer division operator.
 SuperInteger operator/(SuperInteger const& a, SuperInteger const& b) {
 	SuperInteger ret;
 }
 
-// Modulo operator.
+// The modulo operator.
 SuperInteger operator%(SuperInteger const& a, SuperInteger const& b) {
 	if (!(a.neg()) && (!(b.neg()) || b.neg())) {
 		if (b.neg())
@@ -424,7 +424,7 @@ SuperInteger operator%(SuperInteger const& a, SuperInteger const& b) {
 	}
 }
 
-// Left bit shift operator. It simply multiplies by 10.
+// The left bit shift operator. It simply multiplies by 10.
 SuperInteger operator<<(SuperInteger const& a, SuperInteger const& b) {
 	if (b < 0)
 		return a >> -b;
@@ -442,7 +442,7 @@ SuperInteger operator<<(SuperInteger const& a, SuperInteger const& b) {
 	}
 }
 
-// Right bit shift operator. It simply divides by 10.
+// The right bit shift operator. It simply divides by 10.
 SuperInteger operator>>(SuperInteger const& a, SuperInteger const& b) {
 	if (b < 0)
 		return a << -b;
@@ -474,42 +474,42 @@ SuperInteger operator&(SuperInteger const& a, SuperInteger const& b) {
 	return ret;
 }
 
-// Addition-assignment operator.
+// The addition-assignment operator.
 SuperInteger& SuperInteger::operator+=(SuperInteger const& b) {
 	return *this = (*this) + b;
 }
 
-// Substraction-assignment operator.
+// The substraction-assignment operator.
 SuperInteger& SuperInteger::operator-=(SuperInteger const& b) {
 	return *this = (*this) - b;
 }
 
-// Multiplication-assignment operator.
+// The multiplication-assignment operator.
 SuperInteger& SuperInteger::operator*=(SuperInteger const& b) {
 	return *this = (*this) * b;
 }
 
-// Division-assignment operator.
+// The division-assignment operator.
 SuperInteger& SuperInteger::operator/=(SuperInteger const& b) {
 	return *this = (*this) / b;
 }
 
-// Modulo-assignment operator.
+// The modulo-assignment operator.
 SuperInteger& SuperInteger::operator%=(SuperInteger const& b) {
 	return *this = (*this) % b;
 }
 
-// Left-bit-shift-assignment operator.
+// The left-bit-shift-assignment operator.
 SuperInteger& SuperInteger::operator<<=(SuperInteger const& b) {
 	return *this = (*this) << b;
 }
 
-// Right-bit-shift-assignment operator.
+// The right-bit-shift-assignment operator.
 SuperInteger& SuperInteger::operator>>=(SuperInteger const& b) {
 	return *this = (*this) >> b;
 }
 
-// XOR-assignment operator.
+// The XOR-assignment operator.
 SuperInteger& SuperInteger::operator^=(SuperInteger const& b) {
 	return *this = (*this) ^ b;
 }
