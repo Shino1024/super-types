@@ -27,8 +27,6 @@ class SuperInteger {
 		static int c = 0; // Number of SuperIntegers.
 		bool n = false; // The negativity sign.
 	public:
-		bool& neg() {return n;} // Toggling the negativity.
-
 		// Conversion:
 		operator bool();
 		operator char();
@@ -44,6 +42,7 @@ class SuperInteger {
 		operator std::string();
 
 		// Utilities:
+		bool& neg() {return n;} // Toggling the negativity.
 		friend void setbool(SuperInteger s) {boolset.push_back(s);} // The method for setting the "false SuperIntegers".
 		friend void delbool(SuperInteger); // The method for deleting the "false SuperIntegers".
 		int digc() {return digits;} // The number of Digits in the SuperInteger.
@@ -55,7 +54,7 @@ class SuperInteger {
 		int count() const {return c;} // The number of the SuperIntegers.
 		int& operator[](int a) {return integers.at(a - 1).x;} // The subscription operator that returns the ath Digit in the SuperInteger.
 		int operator~() {return this->digits;} // The complementary operator that returns the number of digits in the SuperInteger.
-		std::deque<Digit> operator+() {return this->integers;} // The unary-plus operator for returning the deque with the digits.
+		std::deque<Digit> operator+() {return integers;} // The unary-plus operator for returning the deque with the digits.
 
 		// Constructors:
 		SuperInteger(std::string&, short);
