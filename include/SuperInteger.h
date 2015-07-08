@@ -26,6 +26,7 @@ class SuperInteger {
 		int digits = 1; // Number of Digits of the SuperInteger.
 		static int c = 0; // Number of SuperIntegers.
 		bool n = false; // The negativity sign.
+
 	public:
 		// Conversion:
 		operator bool();

@@ -520,7 +520,7 @@ SuperInteger& SuperInteger::operator&=(SuperInteger const& b) {
 }
 
 // The less-than operator.
-bool operator<(SuperInteger const& a, SuperInteger const& b) {
+bool operator<(SuperInteger const& a, SuperInteger const& b) const {
 	if (a.neg() && !(b.neg())
 		return true;
 	else if (!(a.neg()) && b.neg())
@@ -545,7 +545,7 @@ bool operator<(SuperInteger const& a, SuperInteger const& b) {
 }
 
 // The greater-than operator.
-bool operator>(SuperInteger const& a, SuperInteger const& b) {
+bool operator>(SuperInteger const& a, SuperInteger const& b) const {
 	if (a.neg() && !(b.neg())
 		return false;
 	else if (!(a.neg()) && b.neg())
@@ -570,21 +570,21 @@ bool operator>(SuperInteger const& a, SuperInteger const& b) {
 }
 
 // The less-than-or-equal operator.
-bool operator<=(SuperInteger const& a, SuperInteger const& b) {
+bool operator<=(SuperInteger const& a, SuperInteger const& b) const {
 	if (a == b || a < b)
 		return true;
 	return false;
 }
 
 // The greater-than-or-equal operator.
-bool operator>=(SuperInteger const& a, SuperInteger const& b) {
+bool operator>=(SuperInteger const& a, SuperInteger const& b) const {
 	if (a == b || a > b)
 		return true;
 	return false;
 }
 
 // The equality operator.
-bool operator==(SuperInteger const& a, SuperInteger const& b) {
+bool operator==(SuperInteger const& a, SuperInteger const& b) const {
 	if (a.digc() != b.digc() || a.neg() != b.neg())
 		return false;
 	else
@@ -595,7 +595,7 @@ bool operator==(SuperInteger const& a, SuperInteger const& b) {
 }
 
 // The difference operator.
-bool operator!=(SuperInteger const& a, SuperInteger const& b) {
+bool operator!=(SuperInteger const& a, SuperInteger const& b) const {
 	if (a.digc() != b.digc() || a.neg() != b.neg())
 		return true;
 	else
@@ -603,6 +603,13 @@ bool operator!=(SuperInteger const& a, SuperInteger const& b) {
 			if (a[iter] == b[iter])
 				return false;
 	return true;
+}
+
+// The bool negation operator.
+bool operator!(SuperInteger const& a) const {
+	if (a == 0)
+		return true;
+	return false;
 }
 
 // The preincrementation operator.
@@ -647,13 +654,6 @@ SuperInteger& SuperInteger::operator--(int) {
 		(*this).neg() = true;
 		return *this;
 	}
-}
-
-// The bool negation operator.
-bool operator!(SuperInteger const& a) {
-	if (a == 0)
-		return true;
-	return false;
 }
 
 // The std::ostream operator overload for printing out the SuperIntegers.
