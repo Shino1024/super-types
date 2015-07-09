@@ -49,6 +49,7 @@ as well as it's possible to cast the SuperInteger type to many others. These are
 - std::deque&lt;SuperInteger&gt; returnDeque() - returns the deque with the Digits from the SuperInteger.
 - void setbool(SuperInteger) - sets the SuperInteger as the "false" value.
 - void delbool(SuperInteger) - sets the SuperInteger as the "true" value.
+<br>
 # Features of the SuperInteger type:
 1. It is capable of accepting certain SuperIntegers for which the given object will return false. Thanks to it, one can define any number of other "false" SuperIntegers. Every new object is served with the default 0 value.
 2. It's possible to read to the SuperInteger from the standard input, as well as print its value, thanks to the overloaded std::istream and std::ostream operators.
