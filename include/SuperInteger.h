@@ -1,10 +1,6 @@
 #ifndef SUPERINTEGER_H
 #define SUPERINTEGER_H
 
-#include <string>
-#include <limits>
-#include <iostream>
-
 // The Digit structure that holds one digit in four bits of memory.
 struct Digit {
 	unsigned short x: 4;

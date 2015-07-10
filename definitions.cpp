@@ -1,3 +1,7 @@
+#include <string>
+#include <limits>
+#include <iostream>
+
 #include "include/SuperInteger.h"
 
 // The maximal size of a SuperInteger in digits.
