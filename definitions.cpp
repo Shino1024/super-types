@@ -1,6 +1,7 @@
 #include <string>
 #include <limits>
 #include <iostream>
+#include <deque>
 
 #include "include/SuperInteger.h"
 
